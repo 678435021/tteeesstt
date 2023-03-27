@@ -1,0 +1,18 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true
+	},
+	"extends": [
+		"standard"
+	],
+	"rules": {
+		"indent": ["error", 4, { "SwitchCase": 1 }],
+		"no-tabs": ["error", { "allowIndentationTabs": true }]
+	},
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	}
+}

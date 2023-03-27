@@ -1,3 +1,1 @@
 import './bot.js'
-
-bot
