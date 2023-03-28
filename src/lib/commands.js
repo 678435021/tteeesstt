@@ -33,12 +33,12 @@ export const commands = {
 
         const range = 4
         while (this.followMe.following) {
-            await sleep(50)
-
             if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
                 lookAtEntity(player.entity, true)
+                await sleep(60)
                 continue
             }
+            await sleep(200)
             const goal = new goals.GoalFollow(player.entity, range)
             try {
                 await bot.pathfinder.goto(goal)
