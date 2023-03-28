@@ -36,7 +36,7 @@ export const commands = {
             await sleep(50)
 
             if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
-                lookAtEntity(player.entity)
+                lookAtEntity(player.entity, true)
                 continue
             }
             const goal = new goals.GoalFollow(player.entity, range)
