@@ -28,9 +28,8 @@ bot.pathfinder.setMovements(new Movements(bot, mcData))
 function onPhysicsTick () {}
 
 function onSpawn () {
+    bot.chat('/skin set SonicandTailsCDb robot1_alextest')
     bot.chat("Hey! I'm working properly :D")
-    bot.chat('/skin set SonicandTailsCDb robot1_stevetest')
-
     bot.on('chat', (daname, msg) => {
         if (msg === 'follow me') {
             commands.followMe(daname)
