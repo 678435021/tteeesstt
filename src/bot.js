@@ -52,6 +52,11 @@ function onSpawn () {
             bot.chat("what you want?")
             console.log("I said: what you want?")
         }
+        if (msg === 'Apply my custom skin') {
+            bot.chat("Alright.")
+            bot.chat("/skin set SonicandTailsCD sonicskin")
+            console.log("Applied custom skin for Sonic :)")
+        }
         if (msg === 'stop following me') {
             commands.unFollowMe()
             console.log("I stopped following " + daname)
