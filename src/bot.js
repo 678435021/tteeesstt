@@ -9,7 +9,7 @@ const { pathfinder, Movements } = pathfinderPkg
 export const bot = createBot({
     host: 'SonicJavaBots.aternos.me',
     port: '37867',
-    username: 'aaaa',
+    username: 'SonicandTailsCDb',
     version: '1.18.2'
 })
 
@@ -31,18 +31,35 @@ function onSpawn () {
     bot.chat('/skin set SonicandTailsCDb robot1_alextest')
     bot.chat("Hey! I'm working properly :D")
     bot.on('chat', (daname, msg) => {
+        if (daname === "SonicandTailsCDb") return
+        if (daname === "SkinsRestorer") return
+        console.log(daname + " said: " + msg)
         if (msg === 'follow me') {
             commands.followMe(daname)
+            console.log("I started following " + daname)
             return
         }
-
+        if (msg === 'Come here, sleep with me!') {
+            commands.sleep()
+        }
+        if (msg === 'Clean the area') {
+            commands.mineAround()
+        }
+        if (msg === 'Stop cleaning') {
+            commands.stopMining()
+        }
+        if (msg === 'hey') {
+            bot.chat("what you want?")
+            console.log("I said: what you want?")
+        }
         if (msg === 'stop following me') {
             commands.unFollowMe()
+            console.log("I stopped following " + daname)
         }
     })
 }
 
-// I need to set physicsTick because I want the AI to target me.
+// I'm unsure on how am I gonna use onPhysicsTick function but I'll leave it there in case me or @678435021 wanna use it.
 bot.on('physicsTick', onPhysicsTick)
 
 // Next, I'm gonna set spawn actions.
