@@ -1,3 +1,4 @@
+*.js
 /.github
 /node_modules
 /scripts
