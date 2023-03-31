@@ -9,7 +9,7 @@ const { pathfinder, Movements } = pathfinderPkg;
 export const bot = createBot({
 	host: 'SonicJavaBots.aternos.me',
 	port: 37867,
-	username: 'dddd',
+	username: 'SonicandTailsCDb',
 	version: '1.18.2'
 });
 
