@@ -55,6 +55,9 @@ function onSpawn (): void {
 			bot.chat('what you want?');
 			console.log('I said: what you want?');
 		}
+		if (msg === 'Say hi to 678435021') {
+			bot.chat("Oh, I'm sorry! Hi 678435021! :)")
+		}
 		if (msg === 'stop following me') {
 			commands.unFollowMe();
 			console.log('I stopped following ' + daname);
