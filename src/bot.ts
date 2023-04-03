@@ -31,6 +31,9 @@ bot.pathfinder.searchRadius = 10;
 
 function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
+	while (bot.waitForTicks(60)) {
+		console.log('The skin was set successfully!')
+	};
 	bot.chat("Hey! I'm working properly :D");
 
 	bot.on('chat', async (daname, msg) => {
