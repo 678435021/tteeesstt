@@ -18,17 +18,23 @@ export const botStates = {
 
 export const commands = {
 	async sleep () {
-		console.log('Sleeping!');
-		bot.chat("I'm coming :D");
-		const bed = bot.findBlock({ matching: block => bot.isABed(block) });
-		if (!bed) {
-			console.log("Sorry, I can't find a bed!");
-			return;
+		try {
+			console.log('Sleeping!');
+			bot.chat("I'm coming :D");
+			const bed = bot.findBlock({ matching: block => bot.isABed(block) });
+			if (!bed) {
+				console.log("Sorry, I can't find a bed!");
+				return;
+			}
+			await bot.sleep(bed);
 		}
-		await bot.sleep(bed);
+		catch(err) {
+			bot.chat('Sorry, I couldn\'t sleep! Please check the console log.');
+			console.log(String(err?.message));
+		}
 	},
 	async stopMining () {
-		bot.chat('Okay');
+		bot.chat('Okay! I\'ll stop.');
 		botStates.mining = false;
 	},
 	async mineAround () {
@@ -91,7 +97,7 @@ export const commands = {
 			try {
 				await bot.pathfinder.goto(goal);
 			} catch (err) {
-				bot.chat(String(err?.message));
+				console.log(String(err?.message));
 			}
 		}
 	},
