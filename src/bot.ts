@@ -34,7 +34,6 @@ function onSpawn (): void {
 	bot.chat("Hey! I'm working properly :D");
 
 	bot.on('chat', async (daname, msg) => {
-		if (daname === 'SonicandTailsCDb') return;
 		if (daname === 'SkinsRestorer') return;
 		console.log(daname + ' said: ' + msg);
 		if (msg === 'follow me') {
@@ -42,10 +41,10 @@ function onSpawn (): void {
 			console.log('I started following ' + daname);
 			return;
 		}
-		if (msg === 'Come here, sleep with me!') {
+		if (msg === 'Sleep with me :)') {
 			await commands.sleep();
 		}
-		if (msg === 'CLEEANN') {
+		if (msg === 'CLEEANN!') {
 			await commands.mineAround();
 		}
 		if (msg === 'Stop cleaning') {
