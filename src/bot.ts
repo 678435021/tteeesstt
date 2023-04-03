@@ -40,9 +40,10 @@ function onSpawn (): void {
 		if (daname === 'SkinsRestorer') return;
 		console.log(daname + ' said: ' + msg);
 		if (msg === 'follow me') {
-			await commands.followMe(daname);
-			console.log('I started following ' + daname);
-			return;
+			while (commands.followMe(daname)) {
+				console.log('I started following ' + daname);
+				return;
+			};
 		}
 		if (msg === 'Sleep with me :)') {
 			await commands.sleep();
