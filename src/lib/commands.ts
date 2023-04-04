@@ -1,7 +1,7 @@
 import { lookAtEntity } from './mineflayer-utils.js';
 import { sleep } from './sleep.js';
 import pathfinderPkg from 'mineflayer-pathfinder';
-import { type Bot } from 'mineflayer';
+import { Bot } from 'mineflayer';
 const { goals } = pathfinderPkg;
 
 let bot: Bot;
