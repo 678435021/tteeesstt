@@ -68,7 +68,8 @@ export const commands = {
 						}
 					)
 				);
-			} catch (e) {
+			} 
+			catch (e) {
 				continue;
 			}
 
@@ -100,7 +101,8 @@ export const commands = {
 			const goal = new goals.GoalFollow(player.entity, range);
 			try {
 				await bot.pathfinder.goto(goal);
-			} catch (err) {
+			} 
+			catch (err) {
 				console.log(String(err?.message));
 			}
 		}
