@@ -9,7 +9,8 @@ export function setup (_bot: Bot): void {
 	bot = _bot;
 }
 
-// Add more here when needed
+// 678435021: Add more here when needed
+// SonicandTailsCD: Alright, I will :P
 export const botStates = {
 	moving: false,
 	looking: false,
@@ -36,6 +37,11 @@ export const commands = {
 	async stopMining () {
 		bot.chat('Okay! I\'ll stop.');
 		botStates.mining = false;
+	},
+	async eatWithPlayer(daname: string) {
+		this.followMe(daname)
+		bot.chat('Let me come to you first! :D')
+		if (botStates.looking = true) {}
 	},
 	async mineAround () {
 		if (botStates.mining) {
@@ -96,6 +102,10 @@ export const commands = {
 		while (this.followMe.following) {
 			if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
 				await lookAtEntity(player.entity, true);
+				botStates.looking = true;
+			}
+			else {
+				botStates.looking = false;
 			}
 			await sleep(200);
 			const goal = new goals.GoalFollow(player.entity, range);

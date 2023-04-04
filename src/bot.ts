@@ -3,6 +3,7 @@ import { createBot } from 'mineflayer';
 import pathfinderPkg from 'mineflayer-pathfinder';
 import { commands, setup as setupCmds } from './lib/commands.js';
 import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
+import { autoEat } from 'mineflayer-auto-eat';
 const { pathfinder, Movements } = pathfinderPkg;
 
 // Here, we set up the server connection (in this case, my skin plugin server)
