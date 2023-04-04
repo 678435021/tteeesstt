@@ -14,7 +14,8 @@ export function setup (_bot: Bot): void {
 export const botStates = {
 	moving: false,
 	looking: false,
-	mining: false
+	mining: false,
+	mentionedEatingWithPlayerAlready: false
 };
 
 export const commands = {
@@ -40,8 +41,31 @@ export const commands = {
 	},
 	async eatWithPlayer(daname: string) {
 		this.followMe(daname)
-		bot.chat('Let me come to you first! :D')
-		if (botStates.looking = true) {}
+		if (botStates.mentionedEatingWithPlayerAlready = true) {
+			console.log('Already mentioned coming to player!')
+		} 
+		else {
+			bot.chat('Let me come to you first! :D')
+		}
+		if (botStates.looking = true) {
+			const eatItem = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
+			const eatTime = 1500
+			try {
+				await bot.equip(eatItem, 'hand')
+			}
+			catch (err) {
+				bot.chat(String(err?.message))
+			}
+			bot.activateItem()
+			await sleep(eatTime)
+			bot.deactivateItem()
+			
+		}
+		else {
+			bot.waitForTicks(200)
+			botStates.mentionedEatingWithPlayerAlready = true
+			this.eatWithPlayer(daname)
+		}
 	},
 	async mineAround () {
 		if (botStates.mining) {
