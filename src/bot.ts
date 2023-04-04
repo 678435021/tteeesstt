@@ -21,8 +21,7 @@ bot.loadPlugin(pathfinder);
 const movements = new Movements(bot, bot.registry);
 bot.pathfinder.setMovements(movements);
 bot.pathfinder.thinkTimeout = 10000;
-bot.pathfinder.tickTimeout = 22;
-bot.pathfinder.searchRadius = 10;
+bot.pathfinder.tickTimeout = 22
 
 // And now, we work on the AI here!
 // Here's all of the functions:
@@ -31,9 +30,7 @@ bot.pathfinder.searchRadius = 10;
 
 function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
-	while (bot.waitForTicks(60)) {
-		console.log('The skin was set successfully!')
-	};
+	console.log('The skin was set successfully!')
 	bot.chat("Hey! I'm working properly :D");
 
 	bot.on('chat', async (daname, msg) => {
@@ -49,15 +46,21 @@ function onSpawn (): void {
 			await commands.sleep();
 		}
 		if (msg === 'eat with me') {
-			while (bot.waitForTicks(200)) {
-				commands.eatWithPlayer(daname)
-			}
+			commands.eatWithPlayer(daname)
 		};
 		if (msg === 'CLEEANN!') {
 			await commands.mineAround();
 		}
 		if (msg === 'Stop cleaning') {
 			await commands.stopMining();
+		}
+		if (msg === 'attack me') {
+			const message = "Alright, run while you still can!"
+			bot.chat(message)
+			commands.attackPlayer(daname)
+		}
+		if (msg === 'attack any entity') {
+			commands.attackEntity()
 		}
 		if (msg === 'hey') {
 			bot.chat('what you want?');

@@ -15,6 +15,7 @@ export const botStates = {
 	moving: false,
 	looking: false,
 	mining: false,
+	following: false,
 	mentionedEatingWithPlayerAlready: false
 };
 
@@ -39,6 +40,24 @@ export const commands = {
 		bot.chat('Okay! I\'ll stop.');
 		botStates.mining = false;
 	},
+	async attackPlayer (daname: string) {
+		const player = bot.players[daname]
+		if (!player || !player.entity) {
+		  bot.chat('I can\'t see you')
+		} else {
+		  bot.chat(`Attacking ${player.username}`)
+		  bot.attack(player.entity)
+		}
+	},
+	async attackEntity () {
+		const entity = bot.nearestEntity()
+		if (!entity) {
+		  bot.chat('No nearby entities')
+		} else {
+		  bot.chat(`Attacking ${entity.name ?? entity.username}`)
+		  bot.attack(entity)
+		}
+	},
 	async eatWithPlayer(daname: string) {
 		this.followMe(daname)
 		if (botStates.mentionedEatingWithPlayerAlready = true) {
@@ -59,6 +78,7 @@ export const commands = {
 			bot.activateItem()
 			await sleep(eatTime)
 			bot.deactivateItem()
+			botStates.mentionedEatingWithPlayerAlready = false;
 			
 		}
 		else {
@@ -107,7 +127,7 @@ export const commands = {
 		}
 	},
 	async followMe (daname: string) {
-		this.followMe.following = true;
+		botStates.following = true;
 
 		const player = bot.players[daname];
 		if (botStates.moving) {
@@ -123,7 +143,7 @@ export const commands = {
 		bot.chat('Okay ' + daname);
 
 		const range = 4;
-		while (this.followMe.following) {
+		while (botStates.following) {
 			if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
 				await lookAtEntity(player.entity, true);
 				botStates.looking = true;
@@ -147,7 +167,7 @@ export const commands = {
 		}
 		botStates.moving = false;
 
-		this.followMe.following = false;
+		botStates.following = false;
 		bot.pathfinder.stop();
 	}
 };
