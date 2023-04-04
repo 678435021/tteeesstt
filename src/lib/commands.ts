@@ -54,7 +54,7 @@ export const commands = {
 		if (!entity) {
 		  bot.chat('No nearby entities')
 		} else {
-		  bot.chat(`Attacking ${entity.name ?? entity.username}`)
+		  bot.chat('Attacking ${entity.name ?? entity.username}')
 		  bot.attack(entity)
 		}
 	},
