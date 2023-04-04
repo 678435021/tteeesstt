@@ -60,10 +60,14 @@ export const commands = {
 			}
 
 			try {
-				await bot.pathfinder.goto(new goals.GoalLookAtBlock(grassBlock.position, bot.world, {
-					reach: 2.5,
-					entityHeight: bot.player.entity.height
-				}));
+				await bot.pathfinder.goto(
+					new goals.GoalLookAtBlock(
+						grassBlock.position, bot.world, {
+							reach: 2.5,
+							entityHeight: bot.player.entity.height
+						}
+					)
+				);
 			} catch (e) {
 				continue;
 			}
