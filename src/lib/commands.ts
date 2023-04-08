@@ -142,7 +142,7 @@ export const commands = {
 
 		bot.chat('Okay ' + daname);
 
-		const range = 4;
+		const range = 3;
 		while (botStates.following) {
 			if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
 				await lookAtEntity(player.entity, true);
