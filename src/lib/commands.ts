@@ -19,6 +19,9 @@ export const botStates = {
 	mentionedEatingWithPlayerAlready: false
 };
 
+// Add here any values when needed.
+export const values = {};
+
 export const commands = {
 	async sleep () {
 		try {
@@ -67,10 +70,10 @@ export const commands = {
 			bot.chat('Let me come to you first! :D')
 		}
 		if (botStates.looking = true) {
-			const eatItem = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
+			const eatitem = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
 			const eatTime = 1500
 			try {
-				await bot.equip(eatItem, 'hand')
+				await bot.equip(eatitem, 'hand')
 			}
 			catch (err) {
 				bot.chat(String(err?.message))

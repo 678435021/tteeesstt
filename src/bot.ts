@@ -47,7 +47,7 @@ function onSpawn (): void {
 		}
 		if (msg === 'eat with me') {
 			commands.eatWithPlayer(daname)
-		};
+		}
 		if (msg === 'CLEEANN!') {
 			await commands.mineAround();
 		}
