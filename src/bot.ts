@@ -59,6 +59,9 @@ function onSpawn (): void {
 			bot.chat(message)
 			commands.attackPlayer(daname)
 		}
+		if (msg === 'Stop attacking me') {
+			commands.stopAttacking()
+		}
 		if (msg === 'attack any entity') {
 			commands.attackEntity()
 		}

@@ -16,7 +16,8 @@ export const botStates = {
 	looking: false,
 	mining: false,
 	following: false,
-	mentionedEatingWithPlayerAlready: false
+	mentionedEatingWithPlayerAlready: false,
+	attacking: false
 };
 
 // Add here any values when needed.
@@ -47,10 +48,18 @@ export const commands = {
 		const player = bot.players[daname]
 		if (!player || !player.entity) {
 		  bot.chat('I can\'t see you')
-		} else {
+		} 
+		else {
 		  bot.chat(`Attacking ${player.username}`)
-		  bot.attack(player.entity)
+		  while (botStates.attacking = true) {
+		  	bot.attack(player.entity)
+			bot.waitForTicks(5)
+		  }
 		}
+	},
+	async stopAttacking () {
+		botStates.attacking = false
+		bot.chat('Okay, I won\'t attack you anymore.')
 	},
 	async attackEntity () {
 		const entity = bot.nearestEntity()
