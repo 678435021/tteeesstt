@@ -81,10 +81,10 @@ export const commands = {
 			botStates.mentionedEatingWithPlayerAlready = true
 		}
 		if (botStates.looking = true) {
-			const eatitem = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
+			const eatitem: any = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
 			const eatTime = 1500
 			try {
-				// await bot.equip(eatitem, 'hand')
+				await bot.equip(eatitem, 'hand')
 				bot.chat("Sorry, I'm still being worked on. I cannot eat yet.")
 			}
 			catch (err) {
