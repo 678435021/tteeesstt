@@ -50,11 +50,12 @@ export const commands = {
 		  bot.chat('I can\'t see you')
 		} 
 		else {
-		  bot.chat(`Attacking ${player.username}`)
-		  while (botStates.attacking = true) {
-		  	bot.attack(player.entity)
-			bot.waitForTicks(5)
-		  }
+			bot.chat(`Attacking ${player.username}`)
+			botStates.attacking = true
+			while (botStates.attacking = true) {
+				bot.waitForTicks(20)
+		  		bot.attack(player.entity)
+			}
 		}
 	},
 	async stopAttacking () {
