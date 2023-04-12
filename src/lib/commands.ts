@@ -2,6 +2,7 @@ import { lookAtEntity } from './mineflayer-utils.js';
 import { sleep } from './sleep.js';
 import pathfinderPkg from 'mineflayer-pathfinder';
 import { Bot } from 'mineflayer';
+const pvp = require('mineflayer-pvp').plugin
 const { goals } = pathfinderPkg;
 
 let bot: Bot;
@@ -46,15 +47,16 @@ export const commands = {
 	},
 	async attackPlayer (daname: string) {
 		const player = bot.players[daname]
+		bot.loadPlugin(pvp)
 		if (!player || !player.entity) {
 			bot.chat('I can\'t see you')
 		} 
 		else {
 			bot.chat(`Attacking ${player.username}`)
 			botStates.attacking = true
-			while (botStates.attacking = true) {
+			if (botStates.attacking = true) {
 				bot.waitForTicks(20)
-		  		bot.attack(player.entity)
+				bot.pvp.attack(player.entity)
 			}
 		}
 	},
