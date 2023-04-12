@@ -47,7 +47,7 @@ export const commands = {
 	async attackPlayer (daname: string) {
 		const player = bot.players[daname]
 		if (!player || !player.entity) {
-		  bot.chat('I can\'t see you')
+			bot.chat('I can\'t see you')
 		} 
 		else {
 			bot.chat(`Attacking ${player.username}`)
