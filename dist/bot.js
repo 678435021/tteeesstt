@@ -65,6 +65,11 @@ function onSpawn() {
         if (msg === 'attack any entity') {
             commands.attackEntity();
         }
+        if (msg === 'Stop server') {
+            bot.chat('Okay!');
+            await bot.waitForTicks(60);
+            bot.chat('/stop');
+        }
         if (msg === 'hey') {
             bot.chat('what you want?');
             console.log('I said: what you want?');
