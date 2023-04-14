@@ -40,7 +40,7 @@ function onSpawn (): void {
 			while (commands.followMe(daname)) {
 				console.log('I started following ' + daname);
 				return;
-			};
+			}
 		}
 		if (msg === 'Where are you, bot?') {
 			console.log('Bot is giving its location to ' + daname + '!')
