@@ -42,6 +42,10 @@ function onSpawn (): void {
 				return;
 			};
 		}
+		if (msg === 'Where are you, bot?') {
+			console.log('Bot is giving its location to ' + daname + '!')
+			commands.location(daname)
+		}
 		if (msg === 'Sleep with me :)') {
 			await commands.sleep();
 		}

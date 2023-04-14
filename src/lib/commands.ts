@@ -40,6 +40,9 @@ export const commands = {
 			console.log(String(err?.message));
 		}
 	},
+	async location (daname: string) {
+		bot.chat(daname + ", I\'m at " + bot.entity.position)
+	},
 	async stopMining () {
 		bot.chat('Okay! I\'ll stop.');
 		botStates.mining = false;
@@ -52,8 +55,8 @@ export const commands = {
 		else {
 			bot.chat(`Attacking ${player.username}`)
 			botStates.attacking = true
-			if (botStates.attacking = true) {
-				bot.waitForTicks(20)
+			while (botStates.attacking = true) {
+				await bot.waitForTicks(5)
 				bot.attack(player.entity)
 			}
 		}
@@ -159,16 +162,16 @@ export const commands = {
 
 		const range = 3;
 		while (botStates.following) {
-			if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
-				await lookAtEntity(player.entity, true);
-				botStates.looking = true;
-			}
-			else {
-				botStates.looking = false;
-			}
-			await sleep(200);
-			const goal = new goals.GoalFollow(player.entity, range);
 			try {
+				if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
+					await lookAtEntity(player.entity, true);
+					botStates.looking = true;
+				}
+				else {
+					botStates.looking = false;
+				}
+				await sleep(200);
+				const goal = new goals.GoalFollow(player.entity, range);
 				await bot.pathfinder.goto(goal);
 			} 
 			catch (err) {
