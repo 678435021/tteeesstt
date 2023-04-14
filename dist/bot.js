@@ -3,19 +3,27 @@ import pathfinderPkg from 'mineflayer-pathfinder';
 import { commands, setup as setupCmds } from './lib/commands.js';
 import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
+console.log('Registering the bot and allowing node to control it...');
 export const bot = createBot({
     host: 'SonicJavaBots.aternos.me',
     port: 37867,
     username: 'SonicandTailsCDb',
     version: '1.18.2'
 });
+console.log('Bot client initialized!');
+console.log('Node.JS can control the bot now.');
+console.log('Setting up MfUtils and Cmds');
 setupMfUtils(bot);
 setupCmds(bot);
+console.log('Done :)');
+console.log('Setting up pathfinder...');
 bot.loadPlugin(pathfinder);
 const movements = new Movements(bot, bot.registry);
 bot.pathfinder.setMovements(movements);
 bot.pathfinder.thinkTimeout = 10000;
 bot.pathfinder.tickTimeout = 22;
+console.log('Done :)');
+console.log('Registering function...');
 function onSpawn() {
     bot.chat('/skin set SonicandTailsCDb robot1_alextest');
     console.log('The skin was set successfully!');
@@ -70,4 +78,6 @@ function onSpawn() {
         }
     });
 }
+console.log('Done :)');
+console.log('Running now! The bot\'s active :)');
 bot.once('spawn', onSpawn);

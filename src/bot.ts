@@ -6,28 +6,35 @@ import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
 
 // Here, we set up the server connection (in this case, my skin plugin server)
+console.log('Registering the bot and allowing node to control it...')
 export const bot = createBot({
 	host: 'SonicJavaBots.aternos.me',
 	port: 37867,
 	username: 'SonicandTailsCDb',
 	version: '1.18.2'
 });
-
+console.log('Bot client initialized!');
+console.log('Node.JS can control the bot now.')
+console.log('Setting up MfUtils and Cmds')
 setupMfUtils(bot);
 setupCmds(bot);
+console.log('Done :)')
 
 // Setup pathfinder
+console.log('Setting up pathfinder...')
 bot.loadPlugin(pathfinder);
 const movements = new Movements(bot, bot.registry);
 bot.pathfinder.setMovements(movements);
 bot.pathfinder.thinkTimeout = 10000;
 bot.pathfinder.tickTimeout = 22
+console.log('Done :)')
 
 // And now, we work on the AI here!
 // Here's all of the functions:
 // One note tho: All functions are placeholders.
 // function onPhysicsTick (): void {}
 
+console.log('Registering function...')
 function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
 	console.log('The skin was set successfully!')
@@ -82,9 +89,10 @@ function onSpawn (): void {
 		}
 	});
 }
-
+console.log('Done :)')
 // I'm unsure on how am I gonna use onPhysicsTick function but I'll leave it there in case me or @678435021 wanna use it.
 // bot.on('physicsTick', onPhysicsTick);
 
 // Next, I'm gonna set spawn actions.
+console.log('Running now! The bot\'s active :)')
 bot.once('spawn', onSpawn);
