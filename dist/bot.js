@@ -29,7 +29,6 @@ function onSpawn() {
                 console.log('I started following ' + daname);
                 return;
             }
-            ;
         }
         if (msg === 'Where are you, bot?') {
             console.log('Bot is giving its location to ' + daname + '!');
