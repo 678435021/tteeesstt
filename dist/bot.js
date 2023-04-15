@@ -26,7 +26,7 @@ console.log('Done :)');
 console.log('Registering function...');
 function onSpawn() {
     bot.chat('/skin set SonicandTailsCDb robot1_alextest');
-    console.log('The skin was set successfully!');
+    console.log('Bot initialized completely :)');
     bot.chat("Hey! I'm working properly :D");
     bot.on('chat', async (daname, msg) => {
         if (daname === 'SkinsRestorer')
@@ -84,5 +84,5 @@ function onSpawn() {
     });
 }
 console.log('Done :)');
-console.log('Running now! The bot\'s active :)');
+console.log('Running now!');
 bot.once('spawn', onSpawn);

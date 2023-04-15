@@ -37,7 +37,7 @@ console.log('Done :)')
 console.log('Registering function...')
 function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
-	console.log('The skin was set successfully!')
+	console.log('Bot initialized completely :)');
 	bot.chat("Hey! I'm working properly :D");
 
 	bot.on('chat', async (daname, msg) => {
@@ -99,5 +99,5 @@ console.log('Done :)')
 // bot.on('physicsTick', onPhysicsTick);
 
 // Next, I'm gonna set spawn actions.
-console.log('Running now! The bot\'s active :)')
+console.log('Running now!')
 bot.once('spawn', onSpawn);
