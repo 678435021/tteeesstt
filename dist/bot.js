@@ -38,6 +38,15 @@ function onSpawn() {
                 return;
             }
         }
+        if (msg === 'Protect me :)') {
+			try {
+				commands.protectMe(daname)
+			}
+			catch (err) {
+				console.log(String(err?.message))
+			}
+			console.log('Bot instructed to protect ' + daname + ', obeying player...')
+		}
         if (msg === 'Where are you, bot?') {
             console.log('Bot is giving its location to ' + daname + '!');
             commands.location(daname);

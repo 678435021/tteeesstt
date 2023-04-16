@@ -8,7 +8,8 @@ let bot: Bot;
 export function setup (_bot: Bot): void {
 	bot = _bot;
 }
-
+let player = null;
+export const protectUser = null;
 // 678435021: Add more here when needed
 // SonicandTailsCD: Alright, I will :P
 export const botStates = {
@@ -17,11 +18,16 @@ export const botStates = {
 	mining: false,
 	following: false,
 	mentionedEatingWithPlayerAlready: false,
-	attacking: false
+	attacking: false,
+	guarding: false
 };
 
 // Add here any values when needed.
-export const values = {};
+export const values = {
+	range: 3,
+	BlocksAwayFromTarget: 3,
+	entities: []
+};
 
 export const commands = {
 	async sleep () {
@@ -144,6 +150,48 @@ export const commands = {
 			await bot.dig(grassBlock, true);
 		}
 	},
+	async speakProtect () {
+		bot.chat('Coming now :D')
+	},
+	async protectMe (daname: string) {
+		botStates.guarding = true
+		if (botStates.following = true) {
+			console.log('Already following a player, skipping follow activation!')
+			if (player =! daname) {
+				bot.chat('You\'re not the one I\'m following! I\'m not obeying you. >:(')
+				return
+			}
+			const protectUser = daname;
+			this.speakProtect()
+		}
+		else {
+			console.log('Since the bot isn\'t following anything, the bot will begin following ' + daname)
+			this.followMe(daname)
+			this.speakProtect()
+			const player = bot.players[daname];
+			const protectUser = player
+		}
+		bot.on('entityHurt', async (entity)=>{
+			try {
+				if (entity.username != protectUser) return
+				botStates.attacking = true
+				bot.setControlState('forward', true)
+				bot.setControlState('sprint', true)
+				const location = entity.position
+				while (botStates.attacking = true) {
+					await bot.waitForTicks(5)
+					let distance = bot.entity.position.xzDistanceTo(location)
+					if (distance = values.BlocksAwayFromTarget) {
+						bot.attack(entity)
+					}
+					bot.lookAt(location)
+				}
+			}
+			catch (err) {
+				console.log('The bot wasn\'t able to help ' + protectUser + ' fight! :(')
+			}
+		})
+	},
 	async followMe (daname: string) {
 		botStates.following = true;
 
@@ -155,15 +203,15 @@ export const commands = {
 
 		if (!player?.entity) {
 			bot.chat("I can't see you, " + daname);
+			botStates.moving = false;
 			return;
 		}
 
 		bot.chat('Okay ' + daname);
 
-		const range = 3;
 		while (botStates.following) {
 			try {
-				if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= range) {
+				if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.range) {
 					await lookAtEntity(player.entity, true);
 					botStates.looking = true;
 				}
@@ -171,7 +219,7 @@ export const commands = {
 					botStates.looking = false;
 				}
 				await sleep(200);
-				const goal = new goals.GoalFollow(player.entity, range);
+				const goal = new goals.GoalFollow(player.entity, values.range);
 				await bot.pathfinder.goto(goal);
 			} 
 			catch (err) {

@@ -39,6 +39,45 @@ export const commands = {
         bot.chat('Okay! I\'ll stop.');
         botStates.mining = false;
     },
+    async protectMe (daname) {
+		botStates.guarding = true
+		if (botStates.following = true) {
+			console.log('Already following a player, skipping follow activation!')
+			if (player =! daname) {
+				bot.chat('You\'re not the one I\'m following! I\'m not obeying you. >:(')
+				return
+			}
+			const protectUser = daname;
+			this.speakProtect()
+		}
+		else {
+			console.log('Since the bot isn\'t following anything, the bot will begin following ' + daname)
+			this.followMe(daname)
+			this.speakProtect()
+			const player = bot.players[daname];
+			const protectUser = player
+		}
+		bot.on('entityHurt', async (entity)=>{
+			try {
+				if (entity.username != protectUser) return
+				botStates.attacking = true
+				bot.setControlState('forward', true)
+				bot.setControlState('sprint', true)
+				const location = entity.position
+				while (botStates.attacking = true) {
+					await bot.waitForTicks(5)
+					let distance = bot.entity.position.xzDistanceTo(location)
+					if (distance = values.BlocksAwayFromTarget) {
+						bot.attack(entity)
+					}
+					bot.lookAt(location)
+				}
+			}
+			catch (err) {
+				console.log('The bot wasn\'t able to help ' + protectUser + ' fight! :(')
+			}
+		})
+	},
     async attackPlayer(daname) {
         const player = bot.players[daname];
         if (!player || !player.entity) {

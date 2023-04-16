@@ -1,7 +1,7 @@
 // Here I tell node.js mineflayer and a few other plugins are required to load
 import { createBot } from 'mineflayer';
 import pathfinderPkg from 'mineflayer-pathfinder';
-import { commands, setup as setupCmds } from './lib/commands.js';
+import { botStates, commands, setup as setupCmds } from './lib/commands.js';
 import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
 
@@ -64,6 +64,15 @@ function onSpawn (): void {
 		}
 		if (msg === 'Stop cleaning') {
 			await commands.stopMining();
+		}
+		if (msg === 'Protect me :)') {
+			try {
+				commands.protectMe(daname)
+			}
+			catch (err) {
+				console.log(String(err?.message))
+			}
+			console.log('Bot instructed to protect ' + daname + ', obeying player...')
 		}
 		if (msg === 'attack me') {
 			const message = "Alright, run while you still can!"
