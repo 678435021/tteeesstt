@@ -106,6 +106,8 @@
 		"src/builtin_plugins/*"
 	],
 	"exclude": [
-		"package.json"
+		"package.json",
+		"node_modules/mineflayer/index.d.ts",
+		"node_modules/mineflayer-pathfinder/index.d.ts"
 	]
 }

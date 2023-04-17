@@ -38,15 +38,6 @@ function onSpawn() {
                 return;
             }
         }
-        if (msg === 'Protect me :)') {
-			try {
-				commands.protectMe(daname)
-			}
-			catch (err) {
-				console.log(String(err?.message))
-			}
-			console.log('Bot instructed to protect ' + daname + ', obeying player...')
-		}
         if (msg === 'Where are you, bot?') {
             console.log('Bot is giving its location to ' + daname + '!');
             commands.location(daname);
@@ -62,6 +53,15 @@ function onSpawn() {
         }
         if (msg === 'Stop cleaning') {
             await commands.stopMining();
+        }
+        if (msg === 'Protect me :)') {
+            try {
+                commands.protectMe(daname);
+            }
+            catch (err) {
+                console.log(String(err?.message));
+            }
+            console.log('Bot instructed to protect ' + daname + ', obeying player...');
         }
         if (msg === 'attack me') {
             const message = "Alright, run while you still can!";
