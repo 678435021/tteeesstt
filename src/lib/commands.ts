@@ -238,9 +238,13 @@ export const commands = {
 				if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.range) {
 					await lookAtEntity(player.entity, true);
 					botStates.looking = true;
+					bot.setControlState('sprint', false)
+					bot.setControlState('jump', false)
 				}
 				else {
 					botStates.looking = false;
+					bot.setControlState('sprint', true)
+					bot.setControlState('jump', true)
 				}
 				await sleep(200);
 				const goal = new goals.GoalFollow(player.entity, values.range);
