@@ -38,6 +38,21 @@ function onSpawn() {
                 return;
             }
         }
+        if (msg === 'Follow me in loose mode') {
+            bot.chat('Sure :)');
+            while (commands.followMeLooseMode(daname)) {
+                console.log('I started following ' + daname + ' in loose mode');
+                return;
+            }
+        }
+        if (msg === 'hello') {
+            bot.chat('Hi! :)');
+        }
+        if (msg === 'Reset your viewing location') {
+            await bot.chat('Sure, I\'ll do that :)');
+            await bot.waitForTicks(10);
+            commands.resetViewingLocation();
+        }
         if (msg === 'Where are you, bot?') {
             console.log('Bot is giving its location to ' + daname + '!');
             commands.location(daname);

@@ -2,10 +2,12 @@ import { lookAtEntity } from './mineflayer-utils.js';
 import { sleep } from './sleep.js';
 import pathfinderPkg from 'mineflayer-pathfinder';
 const { goals } = pathfinderPkg;
+import Vec3 from 'vec3';
 let bot;
 export function setup(_bot) {
     bot = _bot;
 }
+let target = null;
 let player = null;
 export const protectUser = null;
 export const botStates = {
@@ -137,6 +139,17 @@ export const commands = {
     async speakProtect() {
         bot.chat('Coming now :D');
     },
+    async resetViewingLocation() {
+        console.log(bot.entity.height);
+        const location1 = new Vec3(~360, ~5, ~0);
+        const location2 = new Vec3(~0, ~5, ~-360);
+        await bot.lookAt(location1, true);
+        await bot.waitForTicks(40);
+        await bot.lookAt(location2, true);
+        bot.setControlState('forward', true);
+        await bot.waitForTicks(20);
+        bot.setControlState('forward', false);
+    },
     async protectMe(daname) {
         botStates.guarding = true;
         if (botStates.following = true) {
@@ -156,25 +169,39 @@ export const commands = {
             const protectUser = player;
         }
         bot.on('entityHurt', async (entity) => {
+            target = entity;
             try {
-                if (entity.username != protectUser)
+                if (botStates.attacking = true)
+                    return;
+                if (target.username != protectUser)
                     return;
                 botStates.attacking = true;
-                bot.setControlState('forward', true);
-                bot.setControlState('sprint', true);
-                const location = entity.position;
+                await bot.setControlState('forward', true);
+                await bot.setControlState('sprint', true);
+                const location = target.position;
+                botStates.guarding = false;
                 while (botStates.attacking = true) {
+                    botStates.following = false;
                     await bot.waitForTicks(5);
                     let distance = bot.entity.position.xzDistanceTo(location);
-                    if (distance = values.BlocksAwayFromTarget) {
-                        bot.attack(entity);
+                    while (distance = values.BlocksAwayFromTarget) {
+                        await bot.attack(target);
+                        bot.lookAt(location);
                     }
-                    bot.lookAt(location);
                 }
             }
             catch (err) {
                 console.log('The bot wasn\'t able to help ' + protectUser + ' fight! :(');
             }
+        });
+        bot.on('entityGone', async (entity) => {
+            if (entity = target) {
+                botStates.attacking = false;
+                botStates.guarding = true;
+                botStates.following = true;
+            }
+            else
+                return;
         });
     },
     async followMe(daname) {
@@ -202,6 +229,40 @@ export const commands = {
                 await sleep(200);
                 const goal = new goals.GoalFollow(player.entity, values.range);
                 await bot.pathfinder.goto(goal);
+            }
+            catch (err) {
+                console.log(String(err?.message));
+            }
+        }
+    },
+    async followMeLooseMode(daname) {
+        botStates.following = true;
+        const target = bot.players[daname]?.entity;
+        if (botStates.moving) {
+            bot.chat("Sorry, can't run this command more than once!");
+        }
+        botStates.moving = true;
+        const { x: playerX, y: playerY, z: playerZ } = target.position;
+        if (!target) {
+            bot.chat("I can't see you, " + daname);
+            botStates.moving = false;
+            return;
+        }
+        bot.chat('Okay ' + daname);
+        while (botStates.following) {
+            try {
+                bot.lookAt(target.position.offset(0, bot.entity.height, 0), true);
+                await sleep(200);
+                if (bot.entity.position.distanceTo(target.position) + 0.15 <= values.range) {
+                    bot.setControlState('forward', false);
+                    bot.setControlState('sprint', false);
+                    bot.setControlState('jump', false);
+                }
+                else {
+                    bot.setControlState('forward', true);
+                    bot.setControlState('sprint', true);
+                    bot.setControlState('jump', true);
+                }
             }
             catch (err) {
                 console.log(String(err?.message));
