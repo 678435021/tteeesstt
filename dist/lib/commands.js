@@ -20,7 +20,7 @@ export const botStates = {
     guarding: false
 };
 export const values = {
-    range: 3,
+    range: 2,
     BlocksAwayFromTarget: 3,
     entities: []
 };

@@ -25,7 +25,7 @@ export const botStates = {
 
 // Add here any values when needed.
 export const values = {
-	range: 3,
+	range: 2,
 	BlocksAwayFromTarget: 3,
 	entities: []
 };
