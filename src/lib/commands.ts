@@ -20,7 +20,8 @@ export const botStates = {
 	following: false,
 	mentionedEatingWithPlayerAlready: false,
 	attacking: false,
-	guarding: false
+	guarding: false,
+	commandMode: false
 };
 
 // Add here any values when needed.
@@ -55,17 +56,22 @@ export const commands = {
 		botStates.mining = false;
 	},
 	async attackPlayer (daname: string) {
-		const player = bot.players[daname]
-		if (!player || !player.entity) {
-			bot.chat('I can\'t see you')
-		} 
-		else {
-			bot.chat(`Attacking ${player.username}`)
-			botStates.attacking = true
-			while (botStates.attacking = true) {
-				await bot.waitForTicks(5)
-				bot.attack(player.entity)
+		try {
+			const player = bot.players[daname]
+			if (!player || !player.entity) {
+				bot.chat('I can\'t see you')
+			} 
+			else {
+				bot.chat(`Attacking ${player.username}`)
+				botStates.attacking = true
+				while (botStates.attacking = true) {
+					await bot.waitForTicks(5)
+					bot.attack(player.entity)
+				}
 			}
+		}
+		catch (err) {
+			bot.chat('Seems like I ran into a problem trying to attack you. I\'ll get you when I can! :)')
 		}
 	},
 	async stopAttacking () {
@@ -239,7 +245,7 @@ export const commands = {
 					await lookAtEntity(player.entity, true);
 					botStates.looking = true;
 					bot.setControlState('sprint', false)
-					
+
 				}
 				else {
 					botStates.looking = false;
@@ -251,6 +257,8 @@ export const commands = {
 			} 
 			catch (err) {
 				console.log(String(err?.message));
+				bot.chat('Sorry, I\'ve ran into an error. I can\'t keep following you. Please run that command again :)')
+				return;
 			}
 		}
 	},

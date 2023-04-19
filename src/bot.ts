@@ -4,6 +4,7 @@ import pathfinderPkg from 'mineflayer-pathfinder';
 import { botStates, commands, setup as setupCmds } from './lib/commands.js';
 import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
+import { lookAtEntity } from './lib/mineflayer-utils.js';
 
 // Here, we set up the server connection (in this case, my skin plugin server)
 console.log('Registering the bot and allowing node to control it...')
@@ -52,7 +53,26 @@ function onSpawn (): void {
 			commands.location(daname)
 		}
 		if (msg === 'Hey, bot?') {
+			await bot.chat('/execute as ' + daname + ' at @s run tp ' + bot.username + ' ^ ^ ^-1 facing entity ' + daname)
+			await bot.waitForTicks(20)
+			const player = bot.players[daname]
+			bot.chat('What\'s up? :)')
+			await bot.waitForTicks(20)
 			botCommandMode(daname)
+			while (botStates.commandMode = true) {
+				await bot.waitForTicks(4)
+				bot.lookAt(
+					player.entity.position.offset(0, player.entity.height, 0), true
+				)
+			}
+		}
+		if (msg === 'What\'s the current state of botStates.commandMode?') {
+			if (botStates.commandMode === true) {
+				bot.chat("It\'s set to true :)")
+			}
+			else {
+				bot.chat("It\'s set to false :)")
+			}
 		}
 		if (msg === 'hey') {
 			bot.chat('what you want?');
@@ -61,28 +81,34 @@ function onSpawn (): void {
 	});
 }
 export function botCommandMode (daname: string) {
+	botStates.commandMode = true
 	bot.once('chat', async (thename, message) => {
 		if (thename != daname) {
-			     bot.chat('I\'m confused :(')
+			bot.chat('I\'m confused :(')
+			botStates.commandMode = false
 			return;
 		}
 		if (message === 'follow me') {
+			botStates.commandMode = false
 			while (commands.followMe(daname)) {
 				console.log('I started following ' + daname);
 				return;
 			}
 		}
 		if (message === 'attack me') {
+			botStates.commandMode = false
 			const message = "Alright, run while you still can!"
 			bot.chat(message)
 			commands.attackPlayer(daname)
 			return;
 		}
 		if (message === 'Stop attacking me') {
+			botStates.commandMode = false
 			commands.stopAttacking()
 			return;
 		}
 		if (message === 'attack any entity') {
+			botStates.commandMode = false
 			commands.attackEntity()
 			return;
 		}
@@ -92,16 +118,23 @@ export function botCommandMode (daname: string) {
 			bot.chat('/tp @a[tag=owner] ' + thename)
 			bot.chat('Have fun :)')
 			bot.whisper("@a[tag=owners]", 'Seems like ' + thename + ' wants to speak with you! :)')
+			botStates.commandMode = false
+			return
 		}
 		if (message === 'Say hi to SonicandTailsCD') {
 			bot.chat("Oh, I'm sorry! Hi SonicandTailsCD! :)")
+			botStates.commandMode = false
+			return
 		}
 		if (message === 'Say hi to 678435021') {
 			bot.chat("Oh, I'm sorry! Hi 678435021! :)")
+			botStates.commandMode = false
+			return
 		}
 		if (message === 'stop following me') {
 			commands.unFollowMe();
 			console.log('I stopped following ' + daname);
+			botStates.commandMode = false
 			return;
 		}
 		if (message === 'Stop server') {
@@ -116,27 +149,43 @@ export function botCommandMode (daname: string) {
 								return
 			}
 			bot.chat('I\'m sorry, but I can\'t do that. Ask an admin to stop the server or ask an admin to give you permission. :(')
+			botStates.commandMode = false
 			return;
 		}
 		if (message === 'Reset your viewing location') {
+			botStates.commandMode = false
 			await bot.chat('Sure, I\'ll do that :)')
 			await bot.waitForTicks(10)
 			commands.resetViewingLocation()
 			return;
 		}
 		if (message === 'Sleep with me :)') {
+			botStates.commandMode = false
 			await commands.sleep();
 			return;
 		}
 		if (message === 'eat with me') {
 			commands.eatWithPlayer(daname)
+			botStates.commandMode = false
+			return
+		}
+		if (message === 'What\'s the current state of botStates.commandMode?') {
+			if (botStates.commandMode === true) {
+				bot.chat("It\'s set to true :)")
+			}
+			else {
+				bot.chat("It\'s set to false :)")
+			}
+			botStates.commandMode = false
 			return;
 		}
 		if (message === 'CLEEANN!') {
+			botStates.commandMode = false
 			await commands.mineAround();
 			return;
 		}
 		if (message === 'Stop cleaning') {
+			botStates.commandMode = false
 			await commands.stopMining();
 			return;
 		}
@@ -147,11 +196,13 @@ export function botCommandMode (daname: string) {
 			catch (err) {
 				console.log(String(err?.message))
 			}
+			botStates.commandMode = false
 			console.log('Bot instructed to protect ' + daname + ', obeying player...')
 			return;
 		}
 		if (message === 'Follow me in loose mode') {
 			bot.chat('Sure :)')
+			botStates.commandMode = false
 			while (commands.followMeLooseMode(daname)) {
 				console.log('I started following ' + daname + ' in loose mode');
 				return;
@@ -159,10 +210,12 @@ export function botCommandMode (daname: string) {
 			return;
 		}
 		else {
+			botStates.commandMode = false
 			bot.chat('I\'m sorry, I can\'t understand your prompt :(')
 			return;
 		}
 	})
+	return
 }
 console.log('Done :)')
 
