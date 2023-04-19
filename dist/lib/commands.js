@@ -223,12 +223,10 @@ export const commands = {
                     await lookAtEntity(player.entity, true);
                     botStates.looking = true;
                     bot.setControlState('sprint', false);
-                    bot.setControlState('jump', false);
                 }
                 else {
                     botStates.looking = false;
                     bot.setControlState('sprint', true);
-                    bot.setControlState('jump', true);
                 }
                 await sleep(200);
                 const goal = new goals.GoalFollow(player.entity, values.range);

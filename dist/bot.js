@@ -10,6 +10,7 @@ export const bot = createBot({
     username: 'SonicandTailsCDb',
     version: '1.18.2'
 });
+const ownersList = ["SonicandTailsCD", "SonicandTailsCD1", "SonicandTailsCDt", "678435921"];
 console.log('Bot client initialized!');
 console.log('Node.JS can control the bot now.');
 console.log('Setting up MfUtils and Cmds');
@@ -32,44 +33,103 @@ function onSpawn() {
         if (daname === 'SkinsRestorer')
             return;
         console.log(daname + ' said: ' + msg);
-        if (msg === 'follow me') {
-            while (commands.followMe(daname)) {
-                console.log('I started following ' + daname);
-                return;
-            }
-        }
-        if (msg === 'Follow me in loose mode') {
-            bot.chat('Sure :)');
-            while (commands.followMeLooseMode(daname)) {
-                console.log('I started following ' + daname + ' in loose mode');
-                return;
-            }
-        }
         if (msg === 'hello') {
             bot.chat('Hi! :)');
-        }
-        if (msg === 'Reset your viewing location') {
-            await bot.chat('Sure, I\'ll do that :)');
-            await bot.waitForTicks(10);
-            commands.resetViewingLocation();
         }
         if (msg === 'Where are you, bot?') {
             console.log('Bot is giving its location to ' + daname + '!');
             commands.location(daname);
         }
-        if (msg === 'Sleep with me :)') {
+        if (msg === 'Hey, bot?') {
+            botCommandMode(daname);
+        }
+        if (msg === 'hey') {
+            bot.chat('what you want?');
+            console.log('I said: what you want?');
+        }
+    });
+}
+export function botCommandMode(daname) {
+    bot.once('chat', async (thename, message) => {
+        if (thename != daname) {
+            bot.chat('I\'m confused :(');
+            return;
+        }
+        if (message === 'follow me') {
+            while (commands.followMe(daname)) {
+                console.log('I started following ' + daname);
+                return;
+            }
+        }
+        if (message === 'attack me') {
+            const message = "Alright, run while you still can!";
+            bot.chat(message);
+            commands.attackPlayer(daname);
+            return;
+        }
+        if (message === 'Stop attacking me') {
+            commands.stopAttacking();
+            return;
+        }
+        if (message === 'attack any entity') {
+            commands.attackEntity();
+            return;
+        }
+        if (message === 'Who made you?') {
+            bot.chat('Well, I was made by SonicandTailsCD and 678435021. It\'s awesome that SonicandTailsCD and 678435021 collaborated! I believe they\'re here, here you go: ');
+            await bot.waitForTicks(200);
+            bot.chat('/tp @a[tag=owner] ' + thename);
+            bot.chat('Have fun :)');
+            bot.whisper("@a[tag=owners]", 'Seems like ' + thename + ' wants to speak with you! :)');
+        }
+        if (message === 'Say hi to SonicandTailsCD') {
+            bot.chat("Oh, I'm sorry! Hi SonicandTailsCD! :)");
+        }
+        if (message === 'Say hi to 678435021') {
+            bot.chat("Oh, I'm sorry! Hi 678435021! :)");
+        }
+        if (message === 'stop following me') {
+            commands.unFollowMe();
+            console.log('I stopped following ' + daname);
+            return;
+        }
+        if (message === 'Stop server') {
+            switch (thename) {
+                case "SonicandTailsCD":
+                case "SonicandTailsCD1":
+                case "SonicandTailsCDt":
+                case "678435021":
+                    bot.chat('Okay!');
+                    await bot.waitForTicks(60);
+                    bot.chat('/stop');
+                    return;
+            }
+            bot.chat('I\'m sorry, but I can\'t do that. Ask an admin to stop the server or ask an admin to give you permission. :(');
+            return;
+        }
+        if (message === 'Reset your viewing location') {
+            await bot.chat('Sure, I\'ll do that :)');
+            await bot.waitForTicks(10);
+            commands.resetViewingLocation();
+            return;
+        }
+        if (message === 'Sleep with me :)') {
             await commands.sleep();
+            return;
         }
-        if (msg === 'eat with me') {
+        if (message === 'eat with me') {
             commands.eatWithPlayer(daname);
+            return;
         }
-        if (msg === 'CLEEANN!') {
+        if (message === 'CLEEANN!') {
             await commands.mineAround();
+            return;
         }
-        if (msg === 'Stop cleaning') {
+        if (message === 'Stop cleaning') {
             await commands.stopMining();
+            return;
         }
-        if (msg === 'Protect me :)') {
+        if (message === 'Protect me :)') {
             try {
                 commands.protectMe(daname);
             }
@@ -77,33 +137,19 @@ function onSpawn() {
                 console.log(String(err?.message));
             }
             console.log('Bot instructed to protect ' + daname + ', obeying player...');
+            return;
         }
-        if (msg === 'attack me') {
-            const message = "Alright, run while you still can!";
-            bot.chat(message);
-            commands.attackPlayer(daname);
+        if (message === 'Follow me in loose mode') {
+            bot.chat('Sure :)');
+            while (commands.followMeLooseMode(daname)) {
+                console.log('I started following ' + daname + ' in loose mode');
+                return;
+            }
+            return;
         }
-        if (msg === 'Stop attacking me') {
-            commands.stopAttacking();
-        }
-        if (msg === 'attack any entity') {
-            commands.attackEntity();
-        }
-        if (msg === 'Stop server') {
-            bot.chat('Okay!');
-            await bot.waitForTicks(60);
-            bot.chat('/stop');
-        }
-        if (msg === 'hey') {
-            bot.chat('what you want?');
-            console.log('I said: what you want?');
-        }
-        if (msg === 'Say hi to 678435021') {
-            bot.chat("Oh, I'm sorry! Hi 678435021! :)");
-        }
-        if (msg === 'stop following me') {
-            commands.unFollowMe();
-            console.log('I stopped following ' + daname);
+        else {
+            bot.chat('I\'m sorry, I can\'t understand your prompt :(');
+            return;
         }
     });
 }
