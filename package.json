@@ -1,7 +1,7 @@
 {
 	"name": "fixm",
-	"version": "1.0.0",
-	"description": "",
+	"version": "4.2.4",
+	"description": "Minecraft bot that is programmed to do anything that SonicandTailsCD says. Credits to 678435021 for helping me :)",
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
@@ -9,7 +9,7 @@
 		"compile": "tsc; echo \"Compiled successfully :)\"",
 		"build": "eslint . --fix; tsc; echo"
 	},
-	"author": "",
+	"author": "SonicandTailsCD",
 	"license": "ISC",
 	"dependencies": {
 		"eslint": "^8.36.0",
@@ -20,7 +20,7 @@
 		"vec3": "^0.1.8"
 	},
 	"devDependencies": {
-		"@types/node": "^18.15.1",
+		"@types/node": "^17.9.1",
 		"@typescript-eslint/eslint-plugin": "^5.54.1",
 		"@typescript-eslint/parser": "^5.54.1",
 		"eslint": "^8.36.0",
