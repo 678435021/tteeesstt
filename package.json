@@ -6,6 +6,7 @@
 	"type": "module",
 	"scripts": {
 		"test": "tsc; node .",
+		"compile": "tsc; echo Compiled successfully :)",
 		"build": "eslint . --fix; tsc; echo"
 	},
 	"author": "",
