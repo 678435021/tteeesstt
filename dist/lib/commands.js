@@ -10,7 +10,7 @@ export function setup(_bot) {
 let target = null;
 let player = null;
 export const protectUser = null;
-export const botStates = {
+export let botStates = {
     moving: false,
     looking: false,
     mining: false,
@@ -18,12 +18,14 @@ export const botStates = {
     mentionedEatingWithPlayerAlready: false,
     attacking: false,
     guarding: false,
-    commandMode: false
+    commandMode: false,
+    happy: false
 };
-export const values = {
+export let values = {
     range: 2,
     BlocksAwayFromTarget: 3,
-    entities: []
+    entities: [],
+    commandModeRange: 7
 };
 export const commands = {
     async sleep() {
@@ -210,7 +212,63 @@ export const commands = {
                 return;
         });
     },
+    async happy(daname) {
+        if (botStates.happy = true) {
+            bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', true);
+            bot.swingArm('right');
+            bot.setControlState('sneak', false);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            bot.setControlState('sneak', true);
+            bot.swingArm('right');
+            bot.setControlState('sneak', false);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+            await bot.waitForTicks(4);
+            bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
+            bot.swingArm('right');
+        }
+        botStates.happy = false;
+        return;
+    },
     async followMe(daname) {
+        botStates.happy = true;
+        await this.happy(daname);
         botStates.following = true;
         const player = bot.players[daname];
         if (botStates.moving) {
@@ -222,7 +280,7 @@ export const commands = {
             botStates.moving = false;
             return;
         }
-        bot.chat('Okay ' + daname);
+        bot.chat('Sure, I\'d be glad to follow you, ' + daname + '! :)');
         while (botStates.following) {
             try {
                 if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.range) {
