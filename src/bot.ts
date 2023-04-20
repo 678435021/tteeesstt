@@ -78,6 +78,9 @@ function onSpawn (): void {
 			bot.chat('what you want?');
 			console.log('I said: what you want?');
 		}
+		if (msg === 'I farted') {
+			bot.chat('That\'s great! Don\'t tell me you pooped yourself tho. That\'s GROSS')
+		}
 	});
 }
 export function botCommandMode (daname: string) {
