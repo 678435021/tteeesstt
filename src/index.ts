@@ -1,2 +1,2 @@
 import './bot.js';
-console.log('Initializing! :)')
+console.log('Initializing! :)');

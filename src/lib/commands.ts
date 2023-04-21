@@ -1,9 +1,9 @@
 import { lookAtEntity } from './mineflayer-utils.js';
 import { sleep } from './sleep.js';
 import pathfinderPkg from 'mineflayer-pathfinder';
-import { Bot } from 'mineflayer';
-const { goals } = pathfinderPkg;
+import { type Bot } from 'mineflayer';
 import Vec3 from 'vec3';
+const { goals } = pathfinderPkg;
 let bot: Bot;
 export function setup (_bot: Bot): void {
 	bot = _bot;
@@ -13,7 +13,7 @@ let player = null;
 export const protectUser = null;
 // 678435021: Add more here when needed
 // SonicandTailsCD: Alright, I will :P
-export let botStates = {
+export const botStates = {
 	moving: false,
 	looking: false,
 	mining: false,
@@ -26,7 +26,7 @@ export let botStates = {
 };
 
 // Add here any values when needed.
-export let values = {
+export const values = {
 	range: 2,
 	BlocksAwayFromTarget: 3,
 	entities: [],
@@ -44,14 +44,13 @@ export const commands = {
 				return;
 			}
 			await bot.sleep(bed);
-		}
-		catch(err) {
+		} catch (err) {
 			bot.chat('Sorry, I couldn\'t sleep! Please check the console log.');
 			console.log(String(err?.message));
 		}
 	},
 	async location (daname: string) {
-		bot.chat(daname + ", I\'m at " + bot.entity.position)
+		bot.chat(daname + ", I\'m at " + bot.entity.position);
 	},
 	async stopMining () {
 		bot.chat('Okay! I\'ll stop.');
@@ -59,65 +58,59 @@ export const commands = {
 	},
 	async attackPlayer (daname: string) {
 		try {
-			const player = bot.players[daname]
+			const player = bot.players[daname];
 			if (!player || !player.entity) {
-				bot.chat('I can\'t see you')
-			} 
-			else {
-				bot.chat(`Attacking ${player.username}`)
-				botStates.attacking = true
+				bot.chat('I can\'t see you');
+			} else {
+				bot.chat(`Attacking ${player.username}`);
+				botStates.attacking = true;
 				while (botStates.attacking = true) {
-					await bot.waitForTicks(5)
-					bot.attack(player.entity)
+					await bot.waitForTicks(5);
+					bot.attack(player.entity);
 				}
 			}
-		}
-		catch (err) {
-			bot.chat('Seems like I ran into a problem trying to attack you. I\'ll get you when I can! :)')
+		} catch (err) {
+			bot.chat('Seems like I ran into a problem trying to attack you. I\'ll get you when I can! :)');
 		}
 	},
 	async stopAttacking () {
-		botStates.attacking = false
-		bot.chat('Okay, I won\'t attack you anymore.')
+		botStates.attacking = false;
+		bot.chat('Okay, I won\'t attack you anymore.');
 	},
 	async attackEntity () {
-		const entity = bot.nearestEntity()
+		const entity = bot.nearestEntity();
 		if (!entity) {
-		  bot.chat('No nearby entities')
+		  bot.chat('No nearby entities');
 		} else {
-		  bot.chat('Attacking ${entity.name ?? entity.username}')
-		  bot.attack(entity)
+		  bot.chat('Attacking ${entity.name ?? entity.username}');
+		  bot.attack(entity);
 		}
 	},
-	async eatWithPlayer(daname: string) {
-		this.followMe(daname)
+	async eatWithPlayer (daname: string) {
+		this.followMe(daname);
 		if (botStates.mentionedEatingWithPlayerAlready = true) {
-			console.log('Already mentioned coming to player!')
-		} 
-		else {
-			bot.chat('Let me come to you first! :D')
-			botStates.mentionedEatingWithPlayerAlready = true
+			console.log('Already mentioned coming to player!');
+		} else {
+			bot.chat('Let me come to you first! :D');
+			botStates.mentionedEatingWithPlayerAlready = true;
 		}
 		if (botStates.looking = true) {
-			const eatitem: any = bot.inventory.items().find(item => item.name === 'Suspicious Stew')
-			const eatTime = 1500
+			const eatitem: any = bot.inventory.items().find(item => item.name === 'Suspicious Stew');
+			const eatTime = 1500;
 			try {
-				await bot.equip(eatitem, 'hand')
-				bot.chat("Sorry, I'm still being worked on. I cannot eat yet.")
+				await bot.equip(eatitem, 'hand');
+				bot.chat("Sorry, I'm still being worked on. I cannot eat yet.");
+			} catch (err) {
+				bot.chat(String(err?.message));
 			}
-			catch (err) {
-				bot.chat(String(err?.message))
-			}
-			bot.activateItem()
-			await sleep(eatTime)
-			bot.deactivateItem()
+			bot.activateItem();
+			await sleep(eatTime);
+			bot.deactivateItem();
 			botStates.mentionedEatingWithPlayerAlready = false;
-			
-		}
-		else {
-			bot.waitForTicks(200)
-			botStates.mentionedEatingWithPlayerAlready = true
-			this.eatWithPlayer(daname)
+		} else {
+			bot.waitForTicks(200);
+			botStates.mentionedEatingWithPlayerAlready = true;
+			this.eatWithPlayer(daname);
 		}
 	},
 	async mineAround () {
@@ -151,8 +144,7 @@ export const commands = {
 						}
 					)
 				);
-			} 
-			catch (e) {
+			} catch (e) {
 				continue;
 			}
 
@@ -160,127 +152,123 @@ export const commands = {
 		}
 	},
 	async speakProtect () {
-		bot.chat('Coming now :D')
+		bot.chat('Coming now :D');
 	},
 	async resetViewingLocation () {
-		console.log(bot.entity.height)
-		const location1 = new Vec3(~360, ~5, ~0)
-		const location2 = new Vec3(~0, ~5, ~-360)
+		console.log(bot.entity.height);
+		const location1 = new Vec3(~360, ~5, ~0);
+		const location2 = new Vec3(~0, ~5, ~-360);
 		await bot.lookAt(location1, true);
-		await bot.waitForTicks(40)
+		await bot.waitForTicks(40);
 		await bot.lookAt(location2, true);
-		bot.setControlState('forward', true)
-		await bot.waitForTicks(20)
-		bot.setControlState('forward', false)
+		bot.setControlState('forward', true);
+		await bot.waitForTicks(20);
+		bot.setControlState('forward', false);
 	},
 	async protectMe (daname: string) {
-		botStates.guarding = true
+		botStates.guarding = true;
 		if (botStates.following = true) {
-			console.log('Already following a player, skipping follow activation!')
-			if (player =! daname) {
-				bot.chat('You\'re not the one I\'m following! I\'m not obeying you. >:(')
-				return
+			console.log('Already following a player, skipping follow activation!');
+			if (player = !daname) {
+				bot.chat('You\'re not the one I\'m following! I\'m not obeying you. >:(');
+				return;
 			}
 			const protectUser = daname;
-			this.speakProtect()
-		}
-		else {
-			console.log('Since the bot isn\'t following anything, the bot will begin following ' + daname)
-			this.followMe(daname)
-			this.speakProtect()
+			this.speakProtect();
+		} else {
+			console.log('Since the bot isn\'t following anything, the bot will begin following ' + daname);
+			this.followMe(daname);
+			this.speakProtect();
 			const player = bot.players[daname];
-			const protectUser = player
+			const protectUser = player;
 		}
-		bot.on('entityHurt', async (entity)=>{
-			target = entity
+		bot.on('entityHurt', async (entity) => {
+			target = entity;
 			try {
-				if (botStates.attacking = true) return
-				if (target.username != protectUser) return
-				botStates.attacking = true
-				await bot.setControlState('forward', true)
-				await bot.setControlState('sprint', true)
-				const location = target.position
-				botStates.guarding = false
+				if (botStates.attacking = true) return;
+				if (target.username != protectUser) return;
+				botStates.attacking = true;
+				await bot.setControlState('forward', true);
+				await bot.setControlState('sprint', true);
+				const location = target.position;
+				botStates.guarding = false;
 				while (botStates.attacking = true) {
-					botStates.following = false
-					await bot.waitForTicks(5)
-					let distance = bot.entity.position.xzDistanceTo(location)
+					botStates.following = false;
+					await bot.waitForTicks(5);
+					let distance = bot.entity.position.xzDistanceTo(location);
 					while (distance = values.BlocksAwayFromTarget) {
-						await bot.attack(target)
-						bot.lookAt(location)
+						await bot.attack(target);
+						bot.lookAt(location);
 					}
 				}
+			} catch (err) {
+				console.log('The bot wasn\'t able to help ' + protectUser + ' fight! :(');
 			}
-			catch (err) {
-				console.log('The bot wasn\'t able to help ' + protectUser + ' fight! :(')
-			}
-		})
-		bot.on('entityGone', async (entity)=>{
+		});
+		bot.on('entityGone', async (entity) => {
 			if (entity = target) {
-				botStates.attacking = false
-				botStates.guarding = true
-				botStates.following = true
-			}
-			else return
-		})
+				botStates.attacking = false;
+				botStates.guarding = true;
+				botStates.following = true;
+			} else return;
+		});
 	},
 	async happy (daname: string) {
 		if (botStates.happy = true) {
-			bot.setControlState('sneak', true)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', false)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', true)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', false)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', true)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', false)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', true)
-			bot.swingArm('right')
-			bot.setControlState('sneak', false)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', false)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', true)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			bot.setControlState('sneak', true)
-			bot.swingArm('right')
-			bot.setControlState('sneak', false)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', false)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
-			await bot.waitForTicks(4)
-			bot.setControlState('sneak', true)
-			await bot.waitForTicks(4)
-			bot.swingArm('right')
+			bot.setControlState('sneak', true);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', false);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', true);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', false);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', true);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', false);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', true);
+			bot.swingArm('right');
+			bot.setControlState('sneak', false);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', false);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', true);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			bot.setControlState('sneak', true);
+			bot.swingArm('right');
+			bot.setControlState('sneak', false);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', false);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
+			await bot.waitForTicks(4);
+			bot.setControlState('sneak', true);
+			await bot.waitForTicks(4);
+			bot.swingArm('right');
 		}
-		botStates.happy = false
-		return
+		botStates.happy = false;
 	},
 	async followMe (daname: string) {
-		botStates.happy = true
-		await this.happy(daname)
+		botStates.happy = true;
+		await this.happy(daname);
 		botStates.following = true;
 
 		const player = bot.players[daname];
@@ -302,25 +290,22 @@ export const commands = {
 				if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.range) {
 					await lookAtEntity(player.entity, true);
 					botStates.looking = true;
-					bot.setControlState('sprint', false)
-
-				}
-				else {
+					bot.setControlState('sprint', false);
+				} else {
 					botStates.looking = false;
-					bot.setControlState('sprint', true)
+					bot.setControlState('sprint', true);
 				}
 				await sleep(200);
 				const goal = new goals.GoalFollow(player.entity, values.range);
 				await bot.pathfinder.goto(goal);
-			} 
-			catch (err) {
+			} catch (err) {
 				console.log(String(err?.message));
-				bot.chat('Sorry, I\'ve ran into an error. I can\'t keep following you. Please run that command again :)')
+				bot.chat('Sorry, I\'ve ran into an error. I can\'t keep following you. Please run that command again :)');
 				return;
 			}
 		}
 	},
-	async followMeLooseMode(daname: string) {
+	async followMeLooseMode (daname: string) {
 		botStates.following = true;
 
 		const target = bot.players[daname]?.entity;
@@ -328,7 +313,7 @@ export const commands = {
 			bot.chat("Sorry, can't run this command more than once!");
 		}
 		botStates.moving = true;
-		const { x: playerX, y: playerY, z: playerZ } = target.position
+		const { x: playerX, y: playerY, z: playerZ } = target.position;
 		if (!target) {
 			bot.chat("I can't see you, " + daname);
 			botStates.moving = false;
@@ -340,17 +325,15 @@ export const commands = {
 				bot.lookAt(target.position.offset(0, bot.entity.height, 0), true);
 				await sleep(200);
 				if (bot.entity.position.distanceTo(target.position) + 0.15 <= values.range) {
-					bot.setControlState('forward', false)
-					bot.setControlState('sprint', false)
-					bot.setControlState('jump', false)
+					bot.setControlState('forward', false);
+					bot.setControlState('sprint', false);
+					bot.setControlState('jump', false);
+				} else {
+					bot.setControlState('forward', true);
+					bot.setControlState('sprint', true);
+					bot.setControlState('jump', true);
 				}
-				else {
-					bot.setControlState('forward', true)
-					bot.setControlState('sprint', true)
-					bot.setControlState('jump', true)
-				}
-			} 
-			catch (err) {
+			} catch (err) {
 				console.log(String(err?.message));
 			}
 		}

@@ -10,7 +10,7 @@ export const bot = createBot({
     username: 'SonicandTailsCDb',
     version: '1.18.2'
 });
-const ownersList = ["SonicandTailsCD", "SonicandTailsCD1", "SonicandTailsCDt", "678435921"];
+const ownersList = ['SonicandTailsCD', 'SonicandTailsCD1', 'SonicandTailsCDt', '678435921'];
 console.log('Bot client initialized!');
 console.log('Node.JS can control the bot now.');
 console.log('Setting up MfUtils and Cmds');
@@ -60,7 +60,7 @@ function onSpawn() {
             }
         }
         if (msg === 'What\'s the current state of botStates.commandMode?') {
-            if (botStates.commandMode === true) {
+            if (botStates.commandMode) {
                 bot.chat("It\'s set to true :)");
             }
             else {
@@ -100,7 +100,7 @@ export function botCommandMode(daname) {
             }
         }
         if (message === 'attack me') {
-            const message = "Alright, run while you still can!";
+            const message = 'Alright, run while you still can!';
             bot.chat(message);
             commands.attackPlayer(daname);
             return;
@@ -118,7 +118,7 @@ export function botCommandMode(daname) {
             await bot.waitForTicks(200);
             bot.chat('/tp @a[tag=owner] ' + thename);
             bot.chat('Have fun :)');
-            bot.whisper("@a[tag=owners]", 'Seems like ' + thename + ' wants to speak with you! :)');
+            bot.whisper('@a[tag=owners]', 'Seems like ' + thename + ' wants to speak with you! :)');
             return;
         }
         if (message === 'Say hi to SonicandTailsCD') {
@@ -136,10 +136,10 @@ export function botCommandMode(daname) {
         }
         if (message === 'Stop server') {
             switch (thename) {
-                case "SonicandTailsCD":
-                case "SonicandTailsCD1":
-                case "SonicandTailsCDt":
-                case "678435021":
+                case 'SonicandTailsCD':
+                case 'SonicandTailsCD1':
+                case 'SonicandTailsCDt':
+                case '678435021':
                     bot.chat('Okay!');
                     await bot.waitForTicks(60);
                     bot.chat('/stop');
@@ -163,7 +163,7 @@ export function botCommandMode(daname) {
             return;
         }
         if (message === 'What\'s the current state of botStates.commandMode?') {
-            if (botStates.commandMode === true) {
+            if (botStates.commandMode) {
                 bot.chat("It\'s set to true :)");
             }
             else {
@@ -203,7 +203,6 @@ export function botCommandMode(daname) {
         }
         botStates.commandMode = false;
     });
-    return;
 }
 console.log('Done :)');
 console.log('Running now!');

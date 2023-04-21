@@ -1,8 +1,8 @@
 import { lookAtEntity } from './mineflayer-utils.js';
 import { sleep } from './sleep.js';
 import pathfinderPkg from 'mineflayer-pathfinder';
-const { goals } = pathfinderPkg;
 import Vec3 from 'vec3';
+const { goals } = pathfinderPkg;
 let bot;
 export function setup(_bot) {
     bot = _bot;
@@ -10,7 +10,7 @@ export function setup(_bot) {
 let target = null;
 let player = null;
 export const protectUser = null;
-export let botStates = {
+export const botStates = {
     moving: false,
     looking: false,
     mining: false,
@@ -21,7 +21,7 @@ export let botStates = {
     commandMode: false,
     happy: false
 };
-export let values = {
+export const values = {
     range: 2,
     BlocksAwayFromTarget: 3,
     entities: [],
@@ -264,7 +264,6 @@ export const commands = {
             bot.swingArm('right');
         }
         botStates.happy = false;
-        return;
     },
     async followMe(daname) {
         botStates.happy = true;
