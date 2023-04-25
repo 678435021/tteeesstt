@@ -42,17 +42,22 @@ function onSpawn() {
         }
         if (msg === 'Hey, bot?') {
             const player = bot.players[daname];
-            if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.commandModeRange) {
-                bot.chat('What\'s up? :)');
-                await bot.waitForTicks(10);
-                botCommandMode(daname);
+            try {
+                if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.commandModeRange) {
+                    bot.chat('What\'s up? :)');
+                    await bot.waitForTicks(10);
+                    botCommandMode(daname);
+                }
+                else {
+                    await bot.chat('/execute as ' + daname + ' at @s run tp ' + bot.username + ' ^ ^ ^-1 facing entity ' + daname);
+                    await bot.waitForTicks(20);
+                    bot.chat('What\'s up? :)');
+                    await bot.waitForTicks(20);
+                    botCommandMode(daname);
+                }
             }
-            else {
-                await bot.chat('/execute as ' + daname + ' at @s run tp ' + bot.username + ' ^ ^ ^-1 facing entity ' + daname);
-                await bot.waitForTicks(20);
-                bot.chat('What\'s up? :)');
-                await bot.waitForTicks(20);
-                botCommandMode(daname);
+            catch(err) {
+                bot.chat('HAHAHAHA something went wrong! Please try again :P')
             }
         }
         if (msg === 'What\'s the current state of botStates.commandMode?') {

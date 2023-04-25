@@ -52,21 +52,23 @@ function onSpawn (): void {
 			commands.location(daname);
 		}
 		if (msg === 'Hey, bot?') {
-			const player = bot.players[daname];
-			if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.commandModeRange) {
-				bot.chat('What\'s up? :)');
-				await bot.waitForTicks(10);
-				botCommandMode(daname);
-			} else {
-				await bot.chat('/execute as ' + daname + ' at @s run tp ' + bot.username + ' ^ ^ ^-1 facing entity ' + daname);
-				await bot.waitForTicks(20);
-				bot.chat('What\'s up? :)');
-				await bot.waitForTicks(20);
-				botCommandMode(daname);
-			}
-			while (botStates.commandMode == true) {
-                await bot.waitForTicks(4);
-                bot.lookAt(player.entity.position.offset(0, player.entity.height, 0), true);
+            const player = bot.players[daname];
+            try {
+                if (bot.entity.position.distanceTo(player.entity.position) + 0.15 <= values.commandModeRange) {
+                    bot.chat('What\'s up? :)');
+                    await bot.waitForTicks(10);
+                    botCommandMode(daname);
+                }
+                else {
+                    await bot.chat('/execute as ' + daname + ' at @s run tp ' + bot.username + ' ^ ^ ^-1 facing entity ' + daname);
+                    await bot.waitForTicks(20);
+                    bot.chat('What\'s up? :)');
+                    await bot.waitForTicks(20);
+                    botCommandMode(daname);
+                }
+            }
+            catch(err) {
+                bot.chat('HAHAHAHA something went wrong! Please try again :P')
             }
         }
 		if (msg === 'What\'s the current state of botStates.commandMode?') {
@@ -207,7 +209,6 @@ export function botCommandMode (daname: string) {
 			bot.chat('I\'m sorry, I can\'t understand your prompt :(');
 			return;
 		}
-		botStates.commandMode = false;
 	});
 }
 console.log('Done :)');
