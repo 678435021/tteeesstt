@@ -5,9 +5,9 @@
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
-		"test": "tsc; node .",
-		"compile": "tsc; echo \"Compiled successfully :)\"",
-		"build": "eslint . --fix; tsc; echo"
+		"test": "tsc & node .",
+		"compile": "tsc & echo \"Compiled successfully :)\"",
+		"build": "eslint . --fix & tsc & echo"
 	},
 	"author": "SonicandTailsCD",
 	"license": "ISC",
