@@ -214,7 +214,7 @@ export const commands = {
 		});
 	},
 	async happy (daname: string) {
-		if (botStates.happy = true) {
+		if (botStates.happy == true) {
 			bot.setControlState('sneak', true);
 			await bot.waitForTicks(4);
 			bot.swingArm('right');
@@ -313,7 +313,7 @@ export const commands = {
 			bot.chat("Sorry, can't run this command more than once!");
 		}
 		botStates.moving = true;
-		const { x: playerX, y: playerY, z: playerZ } = target.position;
+		const {x: playerX, y: playerY, z: playerZ } = target.position;
 		if (!target) {
 			bot.chat("I can't see you, " + daname);
 			botStates.moving = false;
