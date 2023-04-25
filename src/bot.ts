@@ -65,11 +65,10 @@ function onSpawn (): void {
 				botCommandMode(daname);
 			}
 			while (botStates.commandMode == true) {
-                			await bot.waitForTicks(4);
-                			bot.lookAt(player.entity.position.offset(0, player.entity.height, 0), true);
-            			}
-        		}
-		}
+                await bot.waitForTicks(4);
+                bot.lookAt(player.entity.position.offset(0, player.entity.height, 0), true);
+            }
+        }
 		if (msg === 'What\'s the current state of botStates.commandMode?') {
 			if (botStates.commandMode) {
 				bot.chat("It\'s set to true :)");
