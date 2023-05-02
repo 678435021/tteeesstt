@@ -8,8 +8,8 @@ const { pathfinder, Movements } = pathfinderPkg;
 // Here, we set up the server connection (in this case, my skin plugin server)
 console.log('Registering the bot and allowing node to control it...');
 export const bot = createBot({
-	host: 'SonicandTailsCDplay.aternos.me',
-	port: 17444,
+	host: 'SonicJavaBots.aternos.me',
+	port: 37867,
 	username: 'SonicandTailsCDb',
 	version: '1.18.2'
 });
