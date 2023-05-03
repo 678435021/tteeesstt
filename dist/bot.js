@@ -230,6 +230,7 @@ export function botIgnoreMode(daname, message) {
         bot.once('chat', async (fartname, savemessage) => {
             bot.chat(savemessage + " will be ignored. :)");
             values.ignored = savemessage;
+            botStates.ignore = true;
             return;
         });
     }
@@ -238,6 +239,7 @@ export function botIgnoreMode(daname, message) {
         bot.once('chat', async (fartname, savemessage) => {
             bot.chat(savemessage + " will stop being ignored. :)");
             values.ignored = "";
+            botStates.ignore = false;
             return;
         });
     }
