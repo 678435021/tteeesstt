@@ -87,12 +87,14 @@ function onSpawn (): void {
 		}
 	});
 }
-export function botCommandMode (daname: string) {
+export async function botCommandMode (daname: string) {
+	await bot.waitForTicks(20)
 	botStates.commandMode = true;
 	bot.once('chat', async (thename, message) => {
 		botStates.commandMode = false
 		if (thename = bot.username) {
 			bot.chat("Seems I got stuck with my own response. Go ahead, send your request again :D")
+			bot.waitForTicks(40)
 			botCommandMode(daname)
 			return;
 		}
