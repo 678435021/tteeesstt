@@ -124,9 +124,10 @@ export async function botCommandMode (daname: string) {
 			}
 		}
 		if (message === "Ignore someone...") {
-			await bot.waitForTicks(100)
 			bot.chat("Say the name of the person you'd like me to ignore. :)")
+			await bot.waitForTicks(100)
 			botIgnoreMode(daname, message)
+			return;
 		}
 		if (message === "Stop ignoring someone...") {
 			bot.chat("Say the name of the person you'd like me to stop ignoring. :)")
