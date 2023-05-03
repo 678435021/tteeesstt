@@ -22,7 +22,8 @@ export const botStates = {
 	attacking: false,
 	guarding: false,
 	commandMode: false,
-	happy: false
+	happy: false,
+	ignore: false
 };
 
 // Add here any values when needed.
@@ -30,7 +31,8 @@ export const values = {
 	range: 2,
 	BlocksAwayFromTarget: 3,
 	entities: [],
-	commandModeRange: 7
+	commandModeRange: 10,
+	ignored: ""
 };
 
 export const commands = {

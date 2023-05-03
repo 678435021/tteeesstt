@@ -19,13 +19,15 @@ export const botStates = {
     attacking: false,
     guarding: false,
     commandMode: false,
-    happy: false
+    happy: false,
+    ignore: false
 };
 export const values = {
     range: 2,
     BlocksAwayFromTarget: 3,
     entities: [],
-    commandModeRange: 7
+    commandModeRange: 10,
+    ignored: ""
 };
 export const commands = {
     async sleep() {
@@ -60,7 +62,7 @@ export const commands = {
             else {
                 bot.chat(`Attacking ${player.username}`);
                 botStates.attacking = true;
-                while (botStates.attacking = true) {
+                while (botStates.attacking == true) {
                     await bot.waitForTicks(5);
                     bot.attack(player.entity);
                 }
@@ -179,16 +181,16 @@ export const commands = {
         bot.on('entityHurt', async (entity) => {
             target = entity;
             try {
-                if (botStates.attacking = true)
+                if (botStates.attacking == true)
                     return;
-                if (target.username != protectUser)
+                if (target.username !== protectUser)
                     return;
                 botStates.attacking = true;
                 await bot.setControlState('forward', true);
                 await bot.setControlState('sprint', true);
                 const location = target.position;
                 botStates.guarding = false;
-                while (botStates.attacking = true) {
+                while (botStates.attacking == true) {
                     botStates.following = false;
                     await bot.waitForTicks(5);
                     let distance = bot.entity.position.xzDistanceTo(location);
@@ -203,7 +205,7 @@ export const commands = {
             }
         });
         bot.on('entityGone', async (entity) => {
-            if (entity = target) {
+            if (entity == target) {
                 botStates.attacking = false;
                 botStates.guarding = true;
                 botStates.following = true;
@@ -213,7 +215,7 @@ export const commands = {
         });
     },
     async happy(daname) {
-        if (botStates.happy = true) {
+        if (botStates.happy == true) {
             bot.setControlState('sneak', true);
             await bot.waitForTicks(4);
             bot.swingArm('right');

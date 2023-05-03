@@ -91,9 +91,20 @@ export function botCommandMode (daname: string) {
 	botStates.commandMode = true;
 	bot.once('chat', async (thename, message) => {
 		botStates.commandMode = false
+		if (thename = bot.username) {
+			bot.chat("Seems I got stuck with my own response. Go ahead, send your request again :D")
+			botCommandMode(daname)
+			return;
+		}
 		if (thename != daname) {
 			bot.chat('I\'m confused :(');
 			return;
+		}
+		if (botStates.ignore == true) {
+			if (daname == values.ignored) {
+				bot.chat("I'm not responding to that. >:(")
+				return;
+			}
 		}
 		if (message === 'Attempt to reset botStates.commandMode to false') {
 			bot.chat('Sure :)');
@@ -109,6 +120,14 @@ export function botCommandMode (daname: string) {
 				console.log('I started following ' + daname);
 				return;
 			}
+		}
+		if (message === "Ignore someone...") {
+			bot.chat("Say the name of the person you'd like me to ignore. :)")
+			botIgnoreMode(daname, message)
+		}
+		if (message === "Stop ignoring someone...") {
+			bot.chat("Say the name of the person you'd like me to stop ignoring. :)")
+			botIgnoreMode(daname, message)
 		}
 		if (message === 'attack me') {
 			const message = 'Alright, run while you still can!';
@@ -210,6 +229,24 @@ export function botCommandMode (daname: string) {
 			return;
 		}
 	});
+}
+export function botIgnoreMode(daname: string, message: string) {
+	if (message == "Ignore someone...") {
+		bot.chat("Go ahead, say the name.")
+		bot.once('chat', async (fartname, savemessage) => {
+			bot.chat(savemessage + " will be ignored. :)")
+			values.ignored = savemessage
+			return;
+		})
+	}
+	else if (message == "Stop ignoring someone...") {
+		bot.chat("Go ahead, say the name of the person you'd like me to stop ignoring.")
+		bot.once('chat', async (fartname, savemessage) => {
+			bot.chat(savemessage + " will stop being ignored. :)")
+			values.ignored = ""
+			return;
+		})
+	}
 }
 console.log('Done :)');
 
