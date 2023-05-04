@@ -55,13 +55,17 @@ export const commands = {
 		bot.chat(daname + ", I\'m at " + bot.entity.position);
 	},
 	async waitForPlayerOnTrip () {
-		this.unFollowMe()
-		const goal = new goals.GoalGetToBlock(-33, 205, 46)
-		await bot.pathfinder.goto(goal)
-		const blockPos: Vec3 = new Vec3(-37, 205, 47)
-		bot.lookAt(blockPos, true)
-		botStates.happy = true
-		await this.happy()
+		try {
+			const goal = new goals.GoalGetToBlock(-33, 205, 46)
+			await bot.pathfinder.goto(goal)
+			const blockPos: Vec3 = new Vec3(-37, 205, 47)
+			bot.lookAt(blockPos, true)
+			botStates.happy = true
+			await this.happy()
+		}
+		catch(err) {
+			bot.chat("Sorry, an error occured: " + String(err?.message))
+		}
 	},
 	async stopMining () {
 		bot.chat('Okay! I\'ll stop.');
