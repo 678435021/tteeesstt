@@ -184,9 +184,10 @@ export async function botCommandMode(daname) {
             bot.chat("Awe :(");
             await bot.waitForTicks(30);
             bot.chat("Stay safe, alright?");
+            await commands.waitForPlayerOnTrip();
             bot.chat("I will wait for you here!");
             bot.chat("Bye :)");
-            commands.waitForPlayerOnTrip();
+            return;
         }
         if (message === 'Sleep with me :)') {
             await commands.sleep();

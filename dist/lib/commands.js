@@ -51,10 +51,12 @@ export const commands = {
     },
     async waitForPlayerOnTrip() {
         this.unFollowMe();
-        const goal = new goals.GoalGetToBlock(-33, 205, 47);
+        const goal = new goals.GoalGetToBlock(-33, 205, 46);
         await bot.pathfinder.goto(goal);
         const blockPos = new Vec3(-37, 205, 47);
         bot.lookAt(blockPos, true);
+        botStates.happy = true;
+        await this.happy();
     },
     async stopMining() {
         bot.chat('Okay! I\'ll stop.');
@@ -221,7 +223,7 @@ export const commands = {
                 return;
         });
     },
-    async happy(daname) {
+    async happy() {
         if (botStates.happy == true) {
             bot.setControlState('sneak', true);
             await bot.waitForTicks(4);
@@ -248,8 +250,11 @@ export const commands = {
             bot.swingArm('right');
             await bot.waitForTicks(4);
             bot.setControlState('sneak', true);
+            await bot.waitForTicks(4);
             bot.swingArm('right');
+            await bot.waitForTicks(4);
             bot.setControlState('sneak', false);
+            await bot.waitForTicks(4);
             bot.swingArm('right');
             await bot.waitForTicks(4);
             bot.setControlState('sneak', false);
@@ -257,12 +262,6 @@ export const commands = {
             bot.swingArm('right');
             await bot.waitForTicks(4);
             bot.setControlState('sneak', true);
-            await bot.waitForTicks(4);
-            bot.swingArm('right');
-            bot.setControlState('sneak', true);
-            bot.swingArm('right');
-            bot.setControlState('sneak', false);
-            bot.swingArm('right');
             await bot.waitForTicks(4);
             bot.setControlState('sneak', false);
             await bot.waitForTicks(4);
@@ -276,7 +275,7 @@ export const commands = {
     },
     async followMe(daname) {
         botStates.happy = true;
-        await this.happy(daname);
+        await this.happy();
         botStates.following = true;
         const player = bot.players[daname];
         if (botStates.moving) {
