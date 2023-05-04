@@ -230,7 +230,6 @@ export async function botCommandMode(daname) {
 }
 export function botIgnoreMode(daname, message) {
     if (message == "Ignore someone...") {
-        bot.chat("Go ahead, say the name.");
         bot.once('chat', async (fartname, savemessage) => {
             bot.chat(savemessage + " will be ignored. :)");
             values.ignored = savemessage;
