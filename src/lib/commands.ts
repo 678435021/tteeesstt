@@ -54,6 +54,13 @@ export const commands = {
 	async location (daname: string) {
 		bot.chat(daname + ", I\'m at " + bot.entity.position);
 	},
+	async waitForPlayerOnTrip () {
+		this.unFollowMe()
+		const goal = new goals.GoalGetToBlock(-33, 205, 47)
+		await bot.pathfinder.goto(goal)
+		const blockPos: Vec3 = new Vec3(-37, 205, 47)
+		bot.lookAt(blockPos, true)
+	},
 	async stopMining () {
 		bot.chat('Okay! I\'ll stop.');
 		botStates.mining = false;

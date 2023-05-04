@@ -179,6 +179,15 @@ export async function botCommandMode(daname) {
             commands.resetViewingLocation();
             return;
         }
+        if (message === "I'm going out on a trip... I want you to stop following me now.") {
+            await bot.waitForTicks(20);
+            bot.chat("Awe :(");
+            await bot.waitForTicks(30);
+            bot.chat("Stay safe, alright?");
+            bot.chat("I will wait for you here!");
+            bot.chat("Bye :)");
+            commands.waitForPlayerOnTrip();
+        }
         if (message === 'Sleep with me :)') {
             await commands.sleep();
             return;
