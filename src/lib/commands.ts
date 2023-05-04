@@ -275,6 +275,7 @@ export const commands = {
 			bot.setControlState('sneak', true);
 			await bot.waitForTicks(4);
 			bot.swingArm('right');
+			bot.setControlState('sneak', false);
 		}
 		botStates.happy = false;
 	},
