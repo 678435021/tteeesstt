@@ -239,7 +239,6 @@ export function botIgnoreMode(daname, message) {
         });
     }
     else if (message == "Stop ignoring someone...") {
-        bot.chat("Go ahead, say the name of the person you'd like me to stop ignoring.");
         bot.once('chat', async (fartname, savemessage) => {
             bot.chat(savemessage + " will stop being ignored. :)");
             values.ignored = "";
