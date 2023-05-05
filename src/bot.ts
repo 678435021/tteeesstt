@@ -203,7 +203,7 @@ export async function botCommandMode (daname: string) {
 			await commands.sleep();
 			return;
 		}
-		if (message === 'wander around') {
+		if (message === 'wander around.') {
 			while (botStates.wander == true) {
 				await commands.wander()
 			}

@@ -195,7 +195,7 @@ export async function botCommandMode(daname) {
             await commands.sleep();
             return;
         }
-        if (message === 'wander around') {
+        if (message === 'wander around.') {
             while (botStates.wander == true) {
                 await commands.wander();
             }
