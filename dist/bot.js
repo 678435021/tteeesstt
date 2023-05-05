@@ -33,6 +33,12 @@ function onSpawn() {
         if (daname === 'SkinsRestorer')
             return;
         console.log(daname + ' said: ' + msg);
+        if (botStates.ignore == true) {
+            if (daname == values.ignored) {
+                bot.chat("I'm not responding to that. >:(");
+                return;
+            }
+        }
         if (msg === 'hello') {
             bot.chat('Hi! :)');
         }
@@ -79,6 +85,8 @@ function onSpawn() {
 }
 export async function botCommandMode(daname) {
     await bot.waitForTicks(20);
+    botStates.commandTriggers + 1;
+    console.log(botStates.commandTriggers);
     botStates.commandMode = true;
     bot.once('chat', async (thename, message) => {
         botStates.commandMode = false;
@@ -91,12 +99,6 @@ export async function botCommandMode(daname) {
         if (thename != daname) {
             bot.chat('I\'m confused :(');
             return;
-        }
-        if (botStates.ignore == true) {
-            if (daname == values.ignored) {
-                bot.chat("I'm not responding to that. >:(");
-                return;
-            }
         }
         if (message === 'Attempt to reset botStates.commandMode to false') {
             bot.chat('Sure :)');
@@ -191,6 +193,17 @@ export async function botCommandMode(daname) {
         }
         if (message === 'Sleep with me :)') {
             await commands.sleep();
+            return;
+        }
+        if (message === 'wander around') {
+            while (botStates.wander == true) {
+                await commands.wander();
+            }
+        }
+        if (message === 'Stop wandering') {
+            console.log('Understood. Stopping bot...');
+            bot.chat('Sure, stopping...');
+            await commands.stopWander();
             return;
         }
         if (message === 'eat with me') {

@@ -40,10 +40,15 @@ function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
 	console.log('Bot initialized completely :)');
 	bot.chat("Hey! I'm working properly :D");
-
 	bot.on('chat', async (daname, msg) => {
 		if (daname === 'SkinsRestorer') return;
 		console.log(daname + ' said: ' + msg);
+		if (botStates.ignore == true) {
+			if (daname == values.ignored) {
+				bot.chat("I'm not responding to that. >:(")
+				return;
+			}
+		}
 		if (msg === 'hello') {
 			bot.chat('Hi! :)');
 		}
@@ -103,12 +108,6 @@ export async function botCommandMode (daname: string) {
 		if (thename != daname) {
 			bot.chat('I\'m confused :(');
 			return;
-		}
-		if (botStates.ignore == true) {
-			if (daname == values.ignored) {
-				bot.chat("I'm not responding to that. >:(")
-				return;
-			}
 		}
 		if (message === 'Attempt to reset botStates.commandMode to false') {
 			bot.chat('Sure :)');
@@ -202,6 +201,17 @@ export async function botCommandMode (daname: string) {
 		}
 		if (message === 'Sleep with me :)') {
 			await commands.sleep();
+			return;
+		}
+		if (message === 'wander around') {
+			while (botStates.wander == true) {
+				await commands.wander()
+			}
+		}
+		if (message === 'Stop wandering') {
+			console.log('Understood. Stopping bot...')
+			bot.chat('Sure, stopping...')
+			await commands.stopWander()
 			return;
 		}
 		if (message === 'eat with me') {

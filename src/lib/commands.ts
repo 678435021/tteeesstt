@@ -24,7 +24,8 @@ export const botStates = {
 	commandMode: false,
 	happy: false,
 	ignore: false,
-	commandTriggers: 0
+	commandTriggers: 0,
+	wander: false
 };
 
 // Add here any values when needed.
@@ -51,6 +52,29 @@ export const commands = {
 			bot.chat('Sorry, I couldn\'t sleep! Please check the console log.');
 			console.log(String(err?.message));
 		}
+	},
+	async wander() {
+		try {
+			const maxX = 64
+			const minX = -35
+			const maxZ = 99
+			const minZ = 1
+			const locationX = Math.floor(Math.random() * (maxX - minX) + minX)
+			const locationZ = Math.floor(Math.random() * (maxZ - minZ) + minZ)
+			const goal = new goals.GoalGetToBlock(locationX, 205, locationZ)
+			await bot.pathfinder.goto(goal)
+			console.log('Gone to ' + locationX + ', 205, ' + locationZ + '. Waiting for 100 ticks...')
+		}
+		catch(err) {
+			console.log('Error wandering, stopping wandering to avoid glitches.')
+			botStates.wander = false
+			return "Cannot wander."
+		}
+	},
+	async stopWander() {
+		botStates.wander = false
+		bot.pathfinder.stop()
+		console.warn("[WARN] Wandering stopped, pathfinding may glitch")
 	},
 	async location (daname: string) {
 		bot.chat(daname + ", I\'m at " + bot.entity.position);
