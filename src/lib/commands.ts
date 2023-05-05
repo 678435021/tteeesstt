@@ -23,7 +23,8 @@ export const botStates = {
 	guarding: false,
 	commandMode: false,
 	happy: false,
-	ignore: false
+	ignore: false,
+	commandTriggers: 0
 };
 
 // Add here any values when needed.

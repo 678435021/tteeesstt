@@ -89,6 +89,8 @@ function onSpawn (): void {
 }
 export async function botCommandMode (daname: string) {
 	await bot.waitForTicks(20)
+	botStates.commandTriggers + 1
+	console.log(botStates.commandTriggers)
 	botStates.commandMode = true;
 	bot.once('chat', async (thename, message) => {
 		botStates.commandMode = false
