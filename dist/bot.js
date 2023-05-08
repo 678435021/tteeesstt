@@ -28,7 +28,6 @@ bot.pathfinder.tickTimeout = 22;
 console.log('Done :)');
 console.log('Registering function...');
 function onSpawn() {
-    bot.chat('/skin set SonicandTailsCDb robot1_alextest');
     console.log('Bot initialized completely :)');
     try {
         if (botStates.kicked == true) {

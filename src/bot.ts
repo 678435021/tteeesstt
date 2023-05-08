@@ -39,7 +39,6 @@ console.log('Done :)');
 
 console.log('Registering function...');
 function onSpawn (): void {
-	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
 	console.log('Bot initialized completely :)');
 	
 	try {
