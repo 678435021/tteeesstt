@@ -292,4 +292,4 @@ export function botIgnoreMode(daname, message) {
 }
 console.log('Done :)');
 console.log('Running now!');
-bot.on('spawn', onSpawn);
+bot.once('spawn', onSpawn);

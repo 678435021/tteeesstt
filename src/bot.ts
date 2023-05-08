@@ -302,5 +302,5 @@ console.log('Done :)');
 
 // Next, I'm gonna set spawn actions.
 console.log('Running now!');
-bot.on('spawn', onSpawn);
+bot.once('spawn', onSpawn);
 
