@@ -236,6 +236,10 @@ export async function botCommandMode (daname: string) {
 			commands.eatWithPlayer(daname);
 			return;
 		}
+		if (message === "Set your skin") {
+			bot.chat('/skin set SonicandTailsCDb robot1_alextest');
+			bot.chat('Applied :)')
+		}
 		if (message === 'What\'s the current state of botStates.commandMode?') {
 			if (botStates.commandMode) {
 				bot.chat("It\'s set to true :)");
@@ -299,5 +303,5 @@ console.log('Done :)');
 
 // Next, I'm gonna set spawn actions.
 console.log('Running now!');
-bot.once('spawn', onSpawn);
+bot.on('spawn', onSpawn);
 
