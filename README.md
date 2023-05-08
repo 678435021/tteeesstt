@@ -1,3 +1,4 @@
+[![Bot's code](https://github.com/678435021/tteeesstt/actions/workflows/node.js.yml/badge.svg)](https://github.com/678435021/tteeesstt/actions/workflows/node.js.yml)
 # Scripting area
 Hello! This repo is specifically for a bot @678435021 and @SonicandTailsCD are making.
 I don't mind if you want to collaborate but ask @678435021 through the issue that's open right now first. This will ensure we know who we're dealing with.
