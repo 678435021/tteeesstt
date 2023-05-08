@@ -4,12 +4,13 @@ import { botStates, values, commands, setup as setupCmds } from './lib/commands.
 import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
 console.log('Registering the bot and allowing node to control it...');
-export const bot = createBot({
+export const options = {
     host: 'SonicJavaBots.aternos.me',
     port: 37867,
     username: 'SonicandTailsCDb',
     version: '1.18.2'
-});
+};
+export const bot = createBot(options);
 const ownersList = ['SonicandTailsCD', 'SonicandTailsCD1', 'SonicandTailsCDt', '678435921'];
 console.log('Bot client initialized!');
 console.log('Node.JS can control the bot now.');
@@ -272,3 +273,7 @@ export function botIgnoreMode(daname, message) {
 console.log('Done :)');
 console.log('Running now!');
 bot.once('spawn', onSpawn);
+bot.on('kicked', async () => {
+    await createBot(options);
+    return;
+});
