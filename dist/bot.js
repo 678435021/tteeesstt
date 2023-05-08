@@ -11,6 +11,7 @@ export const options = {
     version: '1.18.2'
 };
 export const bot = createBot(options);
+const kickMessage = "Hey, why'd I get kicked, bro?";
 const ownersList = ['SonicandTailsCD', 'SonicandTailsCD1', 'SonicandTailsCDt', '678435921'];
 console.log('Bot client initialized!');
 console.log('Node.JS can control the bot now.');
@@ -29,7 +30,17 @@ console.log('Registering function...');
 function onSpawn() {
     bot.chat('/skin set SonicandTailsCDb robot1_alextest');
     console.log('Bot initialized completely :)');
-    bot.chat("Hey! I'm working properly :D");
+    try {
+        if (botStates.kicked == true) {
+            bot.chat(kickMessage);
+            botStates.kicked = false;
+        }
+        else
+            bot.chat("Hey! I'm working properly :D");
+    }
+    catch (err) {
+        bot.chat("And once again I ran into an error... great.");
+    }
     bot.on('chat', async (daname, msg) => {
         if (daname === 'SkinsRestorer')
             return;
@@ -275,5 +286,7 @@ console.log('Running now!');
 bot.once('spawn', onSpawn);
 bot.on('kicked', async () => {
     await createBot(options);
+    botStates.kicked = true;
+    await onSpawn();
     return;
 });

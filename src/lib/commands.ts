@@ -25,7 +25,8 @@ export const botStates = {
 	happy: false,
 	ignore: false,
 	commandTriggers: 0,
-	wander: false
+	wander: false,
+	kicked: false
 };
 
 // Add here any values when needed.

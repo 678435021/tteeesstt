@@ -22,7 +22,8 @@ export const botStates = {
     happy: false,
     ignore: false,
     commandTriggers: 0,
-    wander: false
+    wander: false,
+    kicked: false
 };
 export const values = {
     range: 2,
