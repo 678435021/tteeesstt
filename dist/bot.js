@@ -94,6 +94,12 @@ function onSpawn() {
             bot.chat('That\'s great! Don\'t tell me you pooped yourself tho. That\'s GROSS');
         }
     });
+    bot.on('kicked', async () => {
+        await createBot(options);
+        botStates.kicked = true;
+        await onSpawn();
+        return;
+    });
 }
 export async function botCommandMode(daname) {
     await bot.waitForTicks(20);
@@ -284,9 +290,3 @@ export function botIgnoreMode(daname, message) {
 console.log('Done :)');
 console.log('Running now!');
 bot.once('spawn', onSpawn);
-bot.on('kicked', async () => {
-    await createBot(options);
-    botStates.kicked = true;
-    await onSpawn();
-    return;
-});

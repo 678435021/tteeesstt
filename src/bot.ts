@@ -41,6 +41,7 @@ console.log('Registering function...');
 function onSpawn (): void {
 	bot.chat('/skin set SonicandTailsCDb robot1_alextest');
 	console.log('Bot initialized completely :)');
+	
 	try {
 		if (botStates.kicked == true) {
 			bot.chat(kickMessage)
@@ -102,6 +103,12 @@ function onSpawn (): void {
 			bot.chat('That\'s great! Don\'t tell me you pooped yourself tho. That\'s GROSS');
 		}
 	});
+	bot.on('kicked', async() => {
+		await createBot(options)
+		botStates.kicked = true
+		await onSpawn()
+		return
+	})
 }
 export async function botCommandMode (daname: string) {
 	await bot.waitForTicks(20)
@@ -293,9 +300,4 @@ console.log('Done :)');
 // Next, I'm gonna set spawn actions.
 console.log('Running now!');
 bot.once('spawn', onSpawn);
-bot.on('kicked', async() => {
-	await createBot(options)
-	botStates.kicked = true
-	await onSpawn()
-	return
-})
+
