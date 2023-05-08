@@ -94,7 +94,7 @@ function onSpawn() {
         }
     });
     bot.on('kicked', async () => {
-        await createBot(options);
+        const bot = createBot(options);
         botStates.kicked = true;
         await onSpawn();
         return;
