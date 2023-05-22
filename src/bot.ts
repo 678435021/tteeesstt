@@ -8,8 +8,8 @@ const { pathfinder, Movements } = pathfinderPkg;
 // Here, we set up the server connection (in this case, my skin plugin server)
 console.log('Registering the bot and allowing node to control it...');
 export const options = {
-	host: 'SonicJavaBots.aternos.me',
-	port: 37867,
+	host: 'localhost',
+	port: 25565,
 	username: 'SonicandTailsCDb',
 	version: '1.18.2'
 }
@@ -111,7 +111,7 @@ function onSpawn (): void {
 }
 export async function botCommandMode (daname: string) {
 	await bot.waitForTicks(20)
-	botStates.commandTriggers + 1
+	
 	console.log(botStates.commandTriggers)
 	botStates.commandMode = true;
 	bot.once('chat', async (thename, message) => {
