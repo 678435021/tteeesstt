@@ -5,8 +5,8 @@ import { setup as setupMfUtils } from './lib/mineflayer-utils.js';
 const { pathfinder, Movements } = pathfinderPkg;
 console.log('Registering the bot and allowing node to control it...');
 export const options = {
-    host: 'SonicJavaBots.aternos.me',
-    port: 37867,
+    host: 'localhost',
+    port: 25565,
     username: 'SonicandTailsCDb',
     version: '1.18.2'
 };
