@@ -155,6 +155,11 @@ export const commands = {
             this.eatWithPlayer(daname);
         }
     },
+    async doit() {
+        bot.setControlState('forward', true);
+        const look = new Vec3(10, 77, 6);
+        bot.lookAt(look);
+    },
     async mineAround() {
         if (botStates.mining) {
             return;

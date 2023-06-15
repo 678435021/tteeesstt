@@ -135,6 +135,11 @@ export async function botCommandMode (daname: string) {
 			}
 			return;
 		}
+		if (message === 'do it') {
+			while (true) {
+				commands.doit()
+			}
+		}
 		if (message === 'follow me') {
 			while (commands.followMe(daname)) {
 				console.log('I started following ' + daname);

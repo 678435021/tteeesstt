@@ -102,7 +102,6 @@ function onSpawn() {
 }
 export async function botCommandMode(daname) {
     await bot.waitForTicks(20);
-    botStates.commandTriggers + 1;
     console.log(botStates.commandTriggers);
     botStates.commandMode = true;
     bot.once('chat', async (thename, message) => {
@@ -126,6 +125,11 @@ export async function botCommandMode(daname) {
                 bot.chat('I wasn\'t able to reset it. Sorry ' + thename + ' :(');
             }
             return;
+        }
+        if (message === 'do it') {
+            while (true) {
+                commands.doit();
+            }
         }
         if (message === 'follow me') {
             while (commands.followMe(daname)) {
